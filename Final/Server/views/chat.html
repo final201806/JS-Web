@@ -3,6 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>客户端1</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 <label>聊天内容:</label><br/>
@@ -16,6 +19,26 @@
 <script type="text/javascript">
 	var socket = io.connect();//连接服务端
 	// 监听 receiveMsg 事件，用来接收其他客户端推送的消息
+
+	function getck(sname) {//获取单个cookies
+		var acookie = document.cookie.split("; ");
+		console.log(acookie);
+		for (var i = 0; i < acookie.length; i++) {
+			var arr = acookie[i].split("=");
+			if (sname == arr[0]) {
+				if (arr.length > 1)
+					return unescape(arr[1]);
+				else
+					return "";
+			}
+		}
+		return "";
+	}
+
+	var user = getck('user');
+	console.log(user);
+	var username = JSON.parse(user.slice(2)).username;
+
 	socket.on("receiveMsg", function (data) {
 		content.value += data.client + ":" + data.msg + "\r\n";
 	});
@@ -23,7 +46,7 @@
 	var sendMsg = document.getElementById("sendMsg");
 	var btn_send = document.getElementById("btn_send");
 	btn_send.addEventListener("click", function () {
-		var data = {client: "客户端1", msg: sendMsg.value};
+		var data = {client: username, msg: sendMsg.value};
 		//给服务端发送 sendMsg事件名的消息
 		socket.emit("sendMsg", data);
 		content.value += data.client + ":" + data.msg + "\r\n";
@@ -46,6 +69,6 @@
 	// 	console.log(error);
 	// });
 </script>
-
+<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </body>
 </html>

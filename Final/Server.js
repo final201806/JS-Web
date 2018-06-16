@@ -3,19 +3,22 @@ var express = require('express');
 var socketIo = require("socket.io");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var path = require('path');
 var ejs = require('ejs');
 var session = require('express-session');
 
 var qs = require('querystring');
-var fs = require('fs');
+var fs = require('fs');;
 var url = require('url');
 
-var module1 = require('./Server/modules/module1');
+
 
 var app = express();
+var port = process.env.PORT || 8080;
 
-app.set('port', 8080);
-app.set('views', __dirname + '/Server/views');
+app.set('port', port);
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', __dirname + '/server/views');
 app.engine('html', ejs.__express);
 app.set('view engine', 'html');
 app.use(bodyParser.json());
@@ -29,28 +32,9 @@ app.use(session({
 		cookie: {maxAge: 600000}
 	})
 );
-// app.use(function (request, response, next) {
-// 	console.log(1);
-// 	console.log(request.session.user);
-// 	if (!request.session.user) {
-// 		if (request.url == '/login') {
-// 			console.log(2);
-// 			next();
-// 		}
-// 		else {
-// 			response.redirect('/login');
-// 			console.log(3);
-// 			// next();
-// 		}
-// 	}
-// 	else if (req.session.user) {
-// 		console.log(4);
-// 		next();
-// 	}
-// });
 
 //router
-require('./Server/Routes')(app);
+require('./server/routes')(app);
 
 
 var server = http.createServer(app).listen(app.get('port'), function () {

@@ -1,3 +1,8 @@
+
+var DB = require('./modules/db');
+
+// console.log(DB.Test())
+
 module.exports = function (app) {
 	app.get('/index', function (request, response) {
 		response.render('index');
@@ -7,6 +12,7 @@ module.exports = function (app) {
 			response.redirect('/login');
 		}
 		else {
+			// response.writeHead(200, { 'Content-Type': 'application/html' });
 			response.render('chat');
 		}
 
@@ -15,27 +21,30 @@ module.exports = function (app) {
 		response.render('login');
 	});
 	app.post("/check", function (request, response, next) {
-		console.log(request.body);
 		var username = request.body.username;
 		var pwd = request.body.pwd;
-		var dbUser = {
-			username: 'admin',
-			pwd: 123456
-		}
-		if (username == dbUser.username && pwd == dbUser.pwd) {
-			//设置cookie
-			response.cookie("user", {username: username}, {maxAge: 600000 , httpOnly: false});
-			//设置session
-			var user = {'username': username};
-			request.session.user = user;
-			console.log(request.session.user);
+		DB.checkPwd(username, function (error, result) {
+			if (error) {
+				console.log('Error:' + error);
+			}
+			else {
+				// console.log(result);
+				if (result.password === pwd) {
+					//设置cookie
+					response.cookie("user", {username: username}, {maxAge: 600000 , httpOnly: false});
+					//设置session
+					var user = {'username': username};
+					request.session.user = user;
+					console.log(request.session.user);
 
-			response.redirect('index');
-			// response.redirect('index');
-		} else {
-			request.error = '用户名密码错误'
-			response.render('login', request);
-		}
+					response.redirect('index');
+				} else {
+					request.error = '用户名密码错误'
+					response.render('login', request);
+				}
+			}
+		});
+
 	});
 	app.get('/logout',function(request,response){
 
@@ -44,4 +53,15 @@ module.exports = function (app) {
 
 		response.redirect('/login');
 	});
+
 };
+
+var callback = function (error, result) {
+	if (error) {
+		return null;
+	}
+	else {
+		console.log(result);
+		return result;
+	}
+}
