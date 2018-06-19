@@ -1,20 +1,16 @@
-var http = require('http');
-var express = require('express');
-var socketIo = require("socket.io");
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var path = require('path');
-var ejs = require('ejs');
-var session = require('express-session');
+let http = require('http');
+let express = require('express');
+let socketIo = require("socket.io");
+let bodyParser = require('body-parser');
+let cookieParser = require('cookie-parser');
+let path = require('path');
+let ejs = require('ejs');
+let session = require('express-session');
 
-var qs = require('querystring');
-var fs = require('fs');;
-var url = require('url');
+let app = express();
+let port = process.env.PORT || 8080;
 
-
-
-var app = express();
-var port = process.env.PORT || 8080;
+let DB = require('./server/modules/db');
 
 app.set('port', port);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,26 +33,37 @@ app.use(session({
 require('./server/routes')(app);
 
 
-var server = http.createServer(app).listen(app.get('port'), function () {
+let server = http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
 
 //聊天室
-var io = new socketIo(server);
+let io = new socketIo(server);
 
 io.on("connection", function (clientSocket) {
 	// socket.io 使用 emit(eventname,data) 发送消息，使用on(eventname,callback)监听消息
 
-	for (let i = 0; i < 10; i++) {
-		clientSocket.emit("receiveMsg", {client: "Manager" + i, msg: "test"});
-	}
+	DB.queryChat(function (error, result) {
+		if (error) {
+			console.log(error);
+		}
+		else {
+			for (let i = result.length - 1; i >= 0 ; i--) {
+				clientSocket.emit("receiveMsg", {client: result[i].client, msg: result[i].msg});
+			}
+		}
+	});
 
 	//监听客户端发送的 sendMsg 事件
 	clientSocket.on("sendMsg", function (data) {
 		// data 为客户端发送的消息，可以是 字符串，json对象或buffer
-
+		DB.addChat([data.client, data.msg, new Date()], function (error, result) {
+			if (error) {
+				console.log(error);
+			}
+		});
 		// 使用 emit 发送消息，broadcast 表示 除自己以外的所有已连接的socket客户端。
 		clientSocket.broadcast.emit("receiveMsg", data);
-	})
+	});
 });

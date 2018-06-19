@@ -6,6 +6,7 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script type="text/javascript" src="js/webJs.js"></script>
 </head>
 <body>
 <label>聊天内容:</label><br/>
@@ -17,49 +18,34 @@
 <!-- 首先引入 socket.io 客户端脚本-->
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
-	var socket = io.connect();//连接服务端
-	// 监听 receiveMsg 事件，用来接收其他客户端推送的消息
+	let socket = io.connect();//连接服务端
 
-	function getck(sname) {//获取单个cookies
-		var acookie = document.cookie.split("; ");
-		console.log(acookie);
-		for (var i = 0; i < acookie.length; i++) {
-			var arr = acookie[i].split("=");
-			if (sname == arr[0]) {
-				if (arr.length > 1)
-					return unescape(arr[1]);
-				else
-					return "";
-			}
-		}
-		return "";
-	}
-
-	var user = getck('user');
+	let user = getck('user');
 	console.log(user);
-	var username = JSON.parse(user.slice(2)).username;
+	let username = JSON.parse(user.slice(2)).username;
 
+	// 监听 receiveMsg 事件，用来接收其他客户端推送的消息
 	socket.on("receiveMsg", function (data) {
 		content.value += data.client + ":" + data.msg + "\r\n";
 	});
-	var content = document.getElementById("content");
-	var sendMsg = document.getElementById("sendMsg");
-	var btn_send = document.getElementById("btn_send");
+	let content = document.getElementById("content");
+	let sendMsg = document.getElementById("sendMsg");
+	let btn_send = document.getElementById("btn_send");
 	btn_send.addEventListener("click", function () {
-		var data = {client: username, msg: sendMsg.value};
+		const data = {client: username, msg: sendMsg.value};
 		//给服务端发送 sendMsg事件名的消息
 		socket.emit("sendMsg", data);
 		content.value += data.client + ":" + data.msg + "\r\n";
 		sendMsg.value = "";
 	});
 
-	var ops = {
+	const ops = {
 		method: "get",
 		// body:JSON.stringify({
 		// 	username: 'test',
 		// 	password: 'test'
 		// })
-	}
+	};
 	// fetch('/test', ops).then(res => {
 	// 	if(res.status === 200)
 	// 		return res.text();

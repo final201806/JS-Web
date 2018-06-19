@@ -8,39 +8,42 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-<!--<form action="check" method="post">-->
-<!--用户名：<input type="text" name="username" ><br/>-->
-<!--密码：<input type="password" name="pwd" ><br/>-->
-<!--<input type="submit" value="登录">-->
-<!--</form>-->
 <div class="container">
-	<div class="row">
-		<div class="col s12 m12">
-			<form class="card-panel" action="check" method="post">
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="username" type="text" class="validate" name="username">
-						<label for="username">用户名</label>
-					</div>
+	<div class="section">
+		<div class="row">
+			<div class="col s12 m6 16">
+				<h2 class="title">Welcome</h2>
+				<div class="content">
+					<h5>Welcome back!</h5>
 				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="password" type="password" class="validate" name="pwd">
-						<label for="password">密码</label>
+			</div>
+			<div class="col s12 m6 16">
+				<form class="card-panel " action="login" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="username" type="text" class="validate" name="username">
+							<label for="username">用户名</label>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="email" type="email" class="validate">
-						<label for="email">Email</label>
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="password" type="password" class="validate" name="pwd">
+							<label for="password">密码</label>
+						</div>
 					</div>
-				</div>
-				<div class="row center-align">
-					<div class="input-field col s12">
-						<input value="登录" type="submit" class="waves-effect waves-light btn-small">
+					<!--<div class="row">-->
+						<!--<div class="input-field col s12">-->
+							<!--<input id="email" type="email" class="validate">-->
+							<!--<label for="email">Email</label>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="row center-align">
+						<div class="input-field col s12">
+							<input value="登录" type="submit" class="waves-effect waves-light btn-small">
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
