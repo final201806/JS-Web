@@ -1,0 +1,2 @@
+$("#menu").sideNav();
+$('.parallax').parallax();

@@ -712,3 +712,5 @@ Final/node_modules/socket.io/node_modules/debug/.travis.yml
 Final/node_modules/socket.io/node_modules/debug/.npmignore
 Final/node_modules/socket.io/node_modules/debug/.eslintrc
 Final/.idea/Final.iml
+.project
+.idea/

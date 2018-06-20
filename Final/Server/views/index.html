@@ -1,104 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
-	<script type="text/javascript" src="js/webJs.js"></script>
-	<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <title>DOTA2 wiki</title>
+    <script src="js/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
+    <script src="js/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<nav>
-	<div class="nav-wrapper">
-		<a href="#" class="brand-logo">Logo</a>
-		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-		<ul class="right hide-on-med-and-down">
-			<li><a href="sass.html">Sass</a></li>
-			<li><a href="badges.html">Components</a></li>
-			<li><a href="collapsible.html">Javascript</a></li>
-			<li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
-		</ul>
-	</div>
-</nav>
+<div class="navbar-fixed">
+    <nav class="grey darken-3" role="navigation">
+        <div class="container nav-wrapper">
+            <a href="" class="brand-logo"><img src="img/img/logo_round.png"/></a>
+            <a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="">首页</a></li>
+                <li><a href="">英雄</a></li>
+                <li><a href="">物品</a></li>
+                <li><a href="">帖子</a></li>
+                <li><a href="">聊天</a></li>
+                <li><a href="">登录</a></li>
+            </ul>
 
-<ul class="sidenav" id="mobile-demo">
-	<li><a href="sass.html">Sass</a></li>
-	<li><a href="badges.html">Components</a></li>
-	<li><a href="collapsible.html">Javascript</a></li>
-	<li><a href="mobile.html">Mobile</a></li>
-</ul>
-
-<ul id="dropdown1" class="dropdown-content">
-	<li><a href="#!">one</a></li>
-	<li><a href="#!">two</a></li>
-	<li class="divider"></li>
-	<li><a href="#!">three</a></li>
-</ul>
-
-<div class="container">
-
+            <ul class="side-nav" id="mobile-nav">
+                <li><a href="">首页</a></li>
+                <li><a href="">图鉴</a></li>
+                <li><a href="">帖子</a></li>
+                <li><a href="">聊天</a></li>
+                <li><a href="">登录</a></li>
+            </ul>
+        </div>
+    </nav>
 </div>
-<div class="welcome">
 
+<div>
+    <div>
+        <video autoplay loop width="100%">
+            <source type="video/webm" src="img/index/keyart.webm">
+        </video>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="img/img/index1.jpg"></div>
+    </div>
 </div>
-<script>
-	var user = getck('user');
-	console.log(user);
 
-	if (user != null && user !== "") {
-		var username = JSON.parse(user.slice(2)).username;
-		document.getElementsByClassName('welcome').item(0).innerHTML = "<p>Welcome! " + username + "</p><button id='logout'>Logout</button>";
-
-		btnLogout = document.getElementById('logout').onclick = function () {
-			console.log('clicked');
-			fetch('/logout', {method: 'get', redirect: "follow", credentials: "include"})
-			.then(res => {
-				if (res.status === 200)
-					window.location.reload();
-			})
-			// .then(text => {
-			// 	console.log(text);
-			// 	window.location.href = text;
-			// })
-			.catch(error => {
-				console.log(error);
-			});
-		}
-	}
-	else {
-		document.getElementsByClassName('welcome').item(0).innerHTML = "<p>Hello</p><button id='login'>Login</button>";
-		btnLogin = document.getElementById('login').onclick = function () {
-			console.log('clicked');
-			window.location.href = '/login';
-			// fetch('/login', {method: 'get'})
-			// .then(res => {
-			// 	if (res.status == 200)
-			// 		return res.text();
-			// })
-			// .then(text => {
-			// 	console.log(text);
-			// 	window.location.href = text;
-			// })
-			// 	.catch(error => {
-			// 		console.log(error);
-			// 	});
-		}
-	}
-
-</script>
-<script>
-
-	$(document).ready(function(){
-		//移动端侧栏
-		$('.sidenav').sidenav();
-		//电脑端下拉框
-		$(".dropdown-trigger").dropdown();
-	});
-
-
-</script>
-<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </body>
+
+<footer class="red lighten-2 page-footer">
+    <div class="row container">
+        <div class="col l6 s12">
+            <h5 class="white-text">特别感谢</h5>
+            <ul>
+                <li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>
+                </li>
+                <li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col l6 s12">
+            <h5 class="white-text">联系我们</h5>
+            <ul>
+                <li><a class="grey-text text-lighten-4"
+                       href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>
+                <li>
+                    <a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by
+            <a class="grey-text text-lighten-4" target="_blank"
+               href="https://github.com/final201806/JS-Web">final201806</a>
+        </div>
+    </div>
+</footer>
+
+<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 </html>
