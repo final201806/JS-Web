@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+</body>
+<script>
+
+	// fetch('/post?postId=1', {
+	// 	method: 'GET',
+	// 	headers : {
+	// 		'Content-Type': 'application/json',
+	// 		'Accept': 'application/json'
+	// 	},
+	// 	redirect: "follow",
+	// }).then(response => {
+	// 	if (response.status === 200) {
+	// 		return response.json();
+	// 	}
+	// }).then(json => {
+	// 	console.log(json)
+	// 	document.body.innerText = json.toString();
+	// }).catch(error => {
+	// 	console.log(error);
+	// });
+
+	// fetch('/post', {
+	// 	method: 'POST',
+	// 	headers : {
+	// 		'Content-Type': 'application/json',
+	// 		'Accept': 'application/json'
+	// 	},
+	// 	body: JSON.stringify({
+	// 		postTitle: 4,
+	// 		postContent: 4,
+	// 		postAuthorName: 'test',
+	// 	}),
+	// 	redirect: "follow",
+	// }).then(response => {
+	// 	if (response.status === 200) {
+	// 		return response.json();
+	// 	}
+	// }).then(json => {
+	// 	console.log(json.code)
+	// 	document.body.innerText = json.toString();
+	// }).catch(error => {
+	// 	console.log(error);
+	// });
+
+	fetch('/post', {
+		method: 'PUT',
+		headers : {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		body: JSON.stringify({
+			postTitle: '4up',
+			postContent: '4up',
+			postId: 4,
+		}),
+		redirect: "follow",
+	}).then(response => {
+		if (response.status === 200) {
+			return response.json();
+		}
+	}).then(json => {
+		console.log(json.code)
+		document.body.innerText = json.toString();
+	}).catch(error => {
+		console.log(error);
+	});
+
+	fetch('/post', {
+		method: 'DELETE',
+		headers : {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		body: JSON.stringify({
+			// postTitle: '4up',
+			// postContent: '4up',
+			postId: 4,
+		}),
+		redirect: "follow",
+	}).then(response => {
+		if (response.status === 200) {
+			return response.json();
+		}
+	}).then(json => {
+		console.log(json.code)
+		document.body.innerText = json.toString();
+	}).catch(error => {
+		console.log(error);
+	});
+</script>
+</html>

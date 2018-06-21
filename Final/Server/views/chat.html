@@ -6,15 +6,37 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="js/webJs.js"></script>
 </head>
 <body>
 <label>聊天内容:</label><br/>
 <textarea id="content" style="height: 200px; width:300px;"></textarea>
 <br/>
-<input id="sendMsg" type="text"/>
-<button id="btn_send">发送</button>
+<!--<input id="sendMsg" type="text"/>-->
+<!--<button id="btn_send">发送</button>-->
 
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+	<div class="modal-content">
+		<h4>Modal Header</h4>
+		<ul class="collection">
+			<li>fdsf</li>
+		</ul>
+	</div>
+	<div class="modal-footer">
+		<div>
+			<div class="row">
+				<input class="col s8 offset-s1" id="sendMsg" type="text"/>
+				<a class="waves-effect waves-light btn left">button</a>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 <!-- 首先引入 socket.io 客户端脚本-->
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
@@ -55,6 +77,10 @@
 	// 	console.log(error);
 	// });
 </script>
+<script>
+	$(document).ready(function () {
+		$('.modal').modal();
+	});
+</script>
 <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
-</body>
 </html>

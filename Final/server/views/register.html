@@ -22,7 +22,7 @@
 					<div class="row">
 						<div class="input-field col s12">
 							<input id="username" type="text" class="validate" name="username" onblur="isExisted()">
-							<label for="username">用户名</label>
+							<label id="usernameLab" for="username">用户名</label>
 						</div>
 					</div>
 					<div class="row">
@@ -50,8 +50,9 @@
 <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 <script>
 	function isExisted() {
-		var usernameObj = document.getElementById('username');
-		var username = usernameObj.value;
+		let usernameObj = document.getElementById('username');
+		let usernameLab = document.getElementById('usernameLab');
+		let username = usernameObj.value;
 		console.log(username);
 		fetch('/isExisted', {
 			method: "POST",
@@ -69,11 +70,11 @@
 			}
 		}).then(json => {
 			if (json.code === 221) {
-				usernameObj.backgroundColor = '#f00';
+				usernameLab.innerText = 'test';
 			}
 		}).catch(error => {
 			console.log(error);
-		})
+		});
 	}
 </script>
 </body>

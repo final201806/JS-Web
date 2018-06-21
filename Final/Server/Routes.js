@@ -3,8 +3,11 @@ let DB = require('./modules/db');
 // console.log(DB.Test())
 
 module.exports = function (app) {
+	app.get('', function (request, response) {
+		response.render('index', request);
+	});
 	app.get('/index', function (request, response) {
-		response.render('index');
+		response.render('index', request);
 	});
 	app.get("/chat", function (request, response) {
 		if (request.session.user == null) {
@@ -32,7 +35,7 @@ module.exports = function (app) {
 					//设置session
 					request.session.user = {'username': username};
 
-					response.redirect('index');
+					response.redirect('/index');
 				} else {
 					request.error = '用户名密码错误';
 					response.render('login', request);
@@ -78,13 +81,160 @@ module.exports = function (app) {
 			}
 		})
 	});
-};
 
-let callback = function (error, result) {
-	if (error) {
-		console.log('Error:' + error);
-	}
-	else {
-		console.log(result);
-	}
+	app.get('/forum', function (request, response) {
+		response.render('post', request);
+	});
+	app.post('/post', function (request, response) {
+		let postTitle = request.body.postTitle;
+		let postContent = request.body.postContent;
+		let postAuthorName = request.body.postAuthorName;//改session获取
+		let postCreateTime = new Date();
+		DB.addPost([postTitle, postContent, postAuthorName, postCreateTime], function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				response.json({code: 200});
+			}
+		});
+	});
+	app.delete('/post', function (request, response) {
+		let postId = request.body.postId;
+		DB.deletePost(postId, function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				response.json({code: 200});
+			}
+		});
+	});
+	app.put('/post', function (request, response) {
+		let postTitle = request.body.postTitle;
+		let postContent = request.body.postContent;
+		let postCreateTime = new Date();
+		let postId = request.body.postId;
+		DB.updatePost([postTitle, postContent, postCreateTime, postId], function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				response.json({code: 200});
+			}
+		});
+	});
+	app.get('/post', function (request, response) {
+		let postId = request.query.postId;
+		DB.queryPost(postId, function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				if (result.length !== 0)
+					response.json(result[0]);
+			}
+		});
+	});
+	app.get('/postList', function (request, response) {
+		DB.queryPostList(function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				if (result.length !== 0) {
+					response.json(result);
+				}
+			}
+		});
+	});
+	app.get('/userPostList', function (request, response) {
+		if (request.session.user == null) {
+			response.redirect('/login');
+		}
+		else {
+			let authorName = request.session.user.username;
+			DB.queryPostByUsername(authorName, function (error, result) {
+				if (error) {
+					response.json({code: 400});
+				}
+				else {
+					if (result.length !== 0) {
+						response.json(result);
+					}
+				}
+			});
+		}
+	});
+
+	app.post('/comment', function (request, response) {
+		let commentContent = request.body.commentContent;
+		let commentAuthorName = request.body.commentAuthorName;
+		let commentCreateTime = new Date();
+		let postId = request.body.postId;
+		DB.addComment([commentContent, commentAuthorName, commentCreateTime, postId], function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				response.json({code: 200});
+			}
+		});
+	});
+	app.delete('/comment', function (request, response) {
+		let commentId = request.body.commentId;
+		DB.deleteComment(commentId, function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				response.json({code: 200});
+			}
+		});
+	});
+	app.put('/comment', function (request, response) {
+		let commentContent = request.body.commentContent;
+		let commentCreateTime = new Date();
+		let commentId = request.body.commentId;
+		DB.updateComment([commentContent, commentCreateTime, commentId], function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				response.json({code: 200});
+			}
+		});
+	});
+	app.get('/comment', function (request, response) {
+		let postId = request.query.postId;
+		DB.queryComment(postId, function (error, result) {
+			if (error) {
+				response.json({code: 400});
+			}
+			else {
+				if (result.length !== 0) {
+					response.json(result);
+				}
+			}
+		});
+	});
+	app.get('/userCommentList', function (request, response) {
+		if (request.session.user == null) {
+			response.redirect('/login');
+		}
+		else {
+			let authorName = request.session.user.username;
+			DB.queryCommentByUsername(authorName, function (error, result) {
+				if (error) {
+					response.json({code: 400});
+				}
+				else {
+					if (result.length !== 0) {
+						response.json(result);
+					}
+				}
+			});
+		}
+	});
+	
 };

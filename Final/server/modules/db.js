@@ -142,7 +142,7 @@ exports.addChat = function (chatRecord, callback) {
 			let sql = 'INSERT INTO chat(client,msg,time) VALUES(?,?,?)';
 			connection.query(sql, chatRecord, function (error, result) {
 				if (error) {
-					callback(error, result);
+					callback(error);
 				}
 				else {
 					callback(null, result);
@@ -163,7 +163,238 @@ exports.queryChat = function (callback) {
 			let sql = 'SELECT * FROM chat ORDER BY time desc limit 10';
 			connection.query(sql, function (error, result) {
 				if (error) {
-					callback(error, result);
+					callback(error);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//发帖
+exports.addPost = function (postParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'INSERT INTO post(title,content,authorName,createTime) VALUES(?,?,?,?)';
+			connection.query(sql, postParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//删帖
+exports.deletePost = function (postParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'DELETE FROM post WHERE id=?';
+			connection.query(sql, postParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//改贴
+exports.updatePost = function (postParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'UPDATE post SET title=?,content=?,createTime=? WHERE id=?';
+			connection.query(sql, postParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//帖子具体内容
+exports.queryPost = function (postParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT * FROM post WHERE id=?';
+			connection.query(sql, postParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//用户个人主页帖子列表
+exports.queryPostByUsername = function (postParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT * FROM post WHERE authorName = ?';
+			connection.query(sql, postParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//主页帖子列表
+exports.queryPostList = function (callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT * FROM post ORDER BY createTime desc';
+			connection.query(sql, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//添加评论
+exports.addComment = function (commentParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'INSERT INTO comment(content,authorName,createTime,postId) VALUES(?,?,?,?)';
+			connection.query(sql, commentParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//删除评论
+exports.deleteComment = function (commentParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'DELETE FROM comment WHERE id=?';
+			connection.query(sql, commentParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//更新评论
+exports.updateComment = function (commentParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'UPDATE comment SET content=?,createTime=? WHERE id=?';
+			connection.query(sql, commentParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//具体帖子内评论
+exports.queryComment = function (commentParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT * FROM comment WHERE postId=?';
+			connection.query(sql, commentParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+//用户个人主页评论列表
+exports.queryCommentByUsername = function (commentParams, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT * FROM comment WHERE authorName = ?';
+			connection.query(sql, commentParams, function (error, result) {
+				if (error) {
+					callback(error, null);
 				}
 				else {
 					callback(null, result);
