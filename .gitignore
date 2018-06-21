@@ -715,3 +715,5 @@ Final/.idea/Final.iml
 .project
 .idea/
 Final/node_modules/
+Final/public/jquery/
+Final/public/materialize/
