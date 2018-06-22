@@ -3,11 +3,41 @@
 <head>
 	<meta charset="UTF-8">
 	<title>登录</title>
+	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
+	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
+<body class="grey darken-3">
+<div class="navbar-fixed">
+	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
+		<div class="container nav-wrapper">
+			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/post">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li><a href="/login">登录</a></li>
+			</ul>
+
+			<ul class="side-nav" id="mobile-nav">
+				<li><a href="index.html">首页</a></li>
+				<li><a href="heroes.html">英雄</a></li>
+				<li><a href="items.html">物品</a></li>
+				<li><a href="post.html">帖子</a></li>
+				<li><a href="chat.html">聊天</a></li>
+				<li><a href="login.html">登录</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+
+<main>
+	<div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
 <div class="container">
 	<div class="section">
 		<div class="row">
@@ -47,6 +77,40 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	</div>
+</main>
+
 </body>
+
+<footer class="grey darken-3 page-footer" style="background: url(img/background.jpg) no-repeat center top;">
+	<div class="row container">
+		<div class="col l6 s12">
+			<h5 class="white-text">特别感谢</h5>
+			<ul>
+				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>
+				</li>
+				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col l6 s12">
+			<h5 class="white-text">联系我们</h5>
+			<ul>
+				<li><a class="grey-text text-lighten-4"
+					   href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>
+				<li>
+					<a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			Made by
+			<a class="grey-text text-lighten-4" target="_blank"
+			   href="https://github.com/final201806/JS-Web">final201806</a>
+		</div>
+	</div>
+</footer>
+
 </html>
