@@ -9,6 +9,12 @@ module.exports = function (app) {
 	app.get('/index', function (request, response) {
 		response.render('index', request);
 	});
+	app.get('/heroes', function (request, response) {
+		response.render('heroes');
+    });
+    app.get('/items', function (request, response) {
+        response.render('items');
+    });
 	app.get("/chat", function (request, response) {
 		if (request.session.user == null) {
 			response.redirect('/login');
