@@ -3,6 +3,11 @@ let DB = require('./modules/db');
 // console.log(DB.Test())
 
 module.exports = function (app) {
+	app.get('/test', function (request, response) {
+		let id = request.query.id;
+		response.render('test', { message: id });
+	});
+
 	app.get('', function (request, response) {
 		response.render('index', request);
 	});
@@ -21,6 +26,12 @@ module.exports = function (app) {
 	app.get("/login", function (request, response) {
 		response.render('login');
 	});
+	app.get('/postDetail', function (request, response) {
+		let id = request.query.id;
+		console.log(id)
+		response.render('test', { message: id });
+	});
+
 	app.post("/login", function (request, response) {
 		let username = request.body.username;
 		let pwd = request.body.pwd;
@@ -131,8 +142,10 @@ module.exports = function (app) {
 				response.json({code: 400});
 			}
 			else {
-				if (result.length !== 0)
-					response.json(result[0]);
+				if (result.length !== 0) {
+					// response.json(result[0]);
+					response.render('postDetail', result[0]);
+				}
 			}
 		});
 	});
