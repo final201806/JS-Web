@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
     <script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
 </head>
 <body class="grey darken-3">
 <div class="navbar-fixed">
@@ -38,7 +39,113 @@
 
 <main>
     <div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
-
+        <div class="container" style="padding-top: 100px">
+            <h1 class="grey-text" style="margin-top: auto">物品Items</h1>
+            <h4 class="grey-text" style="text-align: center">物品名称</h4>
+            <div>
+                <div class="row" style="margin-top: 50px">
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/1.png">
+                        <p class="grey-text">消耗</p>
+                        <div id="item1">
+                            <div v-for="item in items" >
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/2.png">
+                        <p class="grey-text">属性</p>
+                        <div id="item2">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/2.png">
+                        <p class="grey-text">军备</p>
+                        <div id="item3">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/2.png">
+                        <p class="grey-text">奥术</p>
+                        <div id="item4">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/3.png">
+                        <p class="grey-text">普通</p>
+                        <div id="item5">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/4.png">
+                        <p class="grey-text">辅助</p>
+                        <div id="item6">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/4.png">
+                        <p class="grey-text">法器</p>
+                        <div id="item7">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/5.png">
+                        <p class="grey-text">武器</p>
+                        <div id="item8">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/5.png">
+                        <p class="grey-text">防具</p>
+                        <div id="item9">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/6.png">
+                        <p class="grey-text">圣物</p>
+                        <div id="item10">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l1 m2 s3">
+                        <img src="img/item/7.png">
+                        <p class="grey-text">神秘</p>
+                        <div id="item11">
+                            <div v-for="item in items">
+                                <img v-bind:src="item.url" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
