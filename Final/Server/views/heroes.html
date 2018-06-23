@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
     <script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
 </head>
 <body class="grey darken-3">
 <div class="navbar-fixed">
@@ -38,7 +39,58 @@
 
 <main>
     <div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
-
+        <div class="container" style="padding-top: 100px">
+            <h1 class="grey-text" style="margin-top: auto">英雄Heroes</h1>
+            <h4 class="grey-text" style="text-align: center">英雄名称</h4>
+            <p class="grey-text">英雄描述</p>
+            <div>
+                <div></div>
+                <div class="row">
+                    <div class="col l4 s12">
+                        <ul class="collapsible" data-collapsible="accordion">
+                            <li>
+                                <div class="grey-text collapsible-header active" style="background: url(img/bg-navbar.png) no-repeat center top;">力量英雄</div>
+                                <div class="collapsible-body">
+                                    <div id="lil">
+                                        <div v-for="hero in heroes">
+                                            <img v-bind:src="hero.url" style="float: left;width: 25%;padding: 5px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col l4 s12">
+                        <ul class="collapsible" data-collapsible="accordion">
+                            <li>
+                                <div class="grey-text collapsible-header active" style="background: url(img/bg-navbar.png) no-repeat center top;">敏捷英雄</div>
+                                <div class="collapsible-body">
+                                    <div id="minj">
+                                        <div v-for="hero in heroes">
+                                            <img v-bind:src="hero.url" style="float: left;width: 25%;padding: 5px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col l4 s12">
+                        <ul class="collapsible" data-collapsible="accordion">
+                            <li>
+                                <div class="grey-text collapsible-header active" style="background: url(img/bg-navbar.png) no-repeat center top;">智力英雄</div>
+                                <div class="collapsible-body">
+                                    <div id="zhil">
+                                        <div v-for="hero in heroes">
+                                            <img v-bind:src="hero.url" style="float: left;width: 25%;padding: 5px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 </body>

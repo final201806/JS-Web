@@ -1,3 +1,4 @@
 $("#menu").sideNav();
 $('.parallax').parallax();
-$('.carousel').carousel()
+$('.carousel').carousel();
+$('.collapsible').collapsible();
