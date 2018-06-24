@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
+	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script src="js/lib/vue.js"></script>
+</head>
+<body class="grey darken-3">
+<div class="navbar-fixed">
+	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
+		<div class="container nav-wrapper">
+			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/forum">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li><a href="/login">登录</a></li>
+			</ul>
+
+			<ul class="side-nav" id="mobile-nav">
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/forum">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li><a href="/login">登录</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+
+<main>
+	<div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
+		<div class="container"s>
+			<div id="userDetail">
+				<div class="center grey-text">
+					<img src="img/heroes/abaddon_full.png" class="circle" style="margin-top: 100px"><br>
+					<span>{{userDetail.username}}</span><br>
+					<span>邮箱：</span><span v-if="userDetail.email !== null">{{userDetail.email}}</span><span v-else>该用户还没有填写邮箱</span><br>
+					<span>简介：</span><span v-if="userDetail.profile !== null">{{userDetail.profile}}</span><span v-else>该用户还没有填写简介</span><br>
+					<!--{{userDetail}}-->
+				</div>
+			</div>
+			<ul id="tabs-swipe" class="tabs center transparent" style="margin-top: 20px">
+				<li class="tab col s4 m4 l6"><a href="#swipe-1" class="grey-text">他的帖子</a></li>
+				<li class="tab col s4 m4 l6"><a href="#swipe-2" class="grey-text">他的评论</a></li>
+			</ul>
+
+			<div id="swipe-1" class="col s12">
+				<div class="" id="posts" v-show="isNull">
+					<div class="row" v-for="post in posts">
+						<div class="col s12 m12">
+							<div class="card blue-grey darken-1">
+								<div class="card-content white-text">
+									<a class="card-title" :href="'/postDetail?id=' + post.id">{{post.title}}</a>
+									<p>{{post.content}}</p>
+								</div>
+								<div class="card-action">
+									<!--<p class="right">{{site.authorName}}</p>-->
+									<a class="right" href="#">{{post.createTime}}</a>
+									<!--<a class="right" :href="'/userHome?username=' + post.authorName">{{post.authorName}}</a>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="swipe-2" class="col s12">
+				<div class="" id="comments" v-show="isNull">
+					<div class="row" v-for="comment in comments">
+						<div class="col s12 m12">
+							<div class="card blue-grey darken-1">
+								<div class="card-content white-text">
+									<!--<span class="card-title">{{detail.title}}</span>-->
+									<p>{{comment.content}}</p>
+								</div>
+								<div class="card-action">
+									<!--<p class="right">{{site.authorName}}</p>-->
+									<a class="right" href="#">{{comment.createTime}}</a>
+									<!--<a class="right" :href="'/userHome?username=' + comment.authorName">{{comment.authorName}}</a>-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+</body>
+<script>
+	let username = '<%=message%>';
+	//用户信息
+	fetch('/userDetail?username=' + username, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+	}).then(response => {
+		if (response.status === 200) {
+			return response.json();
+		}
+		else {
+			new Vue({
+				el: '#userDetail',
+				data: {
+					isNull: false
+				}
+			});
+		}
+	}).then(json => {
+		console.log(json)
+		new Vue({
+			el: '#userDetail',
+			data: {
+				userDetail: json,
+				isNull: false
+			}
+		});
+	}).catch(error => {
+		console.log(error);
+	});
+
+	//用户发帖
+	fetch('/userPostList?username=' + username, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+	}).then(response => {
+		if (response.status === 200) {
+			return response.json();
+		}
+		else {
+			new Vue({
+				el: '#posts',
+				data: {
+					isNull: false
+				}
+			});
+		}
+	}).then(json => {
+		console.log(json)
+		new Vue({
+			el: '#posts',
+			data: {
+				posts: json,
+				isNull: json.code !== 400
+			}
+		});
+	}).catch(error => {
+		console.log(error);
+	});
+
+	//用户评论
+	fetch('/userCommentList?username=' + username, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+	}).then(response => {
+		if (response.status === 200) {
+			return response.json();
+		}
+		else {
+			new Vue({
+				el: '#comments',
+				data: {
+					isNull: false
+				}
+			});
+		}
+	}).then(json => {
+		console.log(json)
+		new Vue({
+			el: '#comments',
+			data: {
+				comments: json,
+				isNull: json.code !== 400
+			}
+		});
+	}).catch(error => {
+		console.log(error);
+	});
+</script>
+</html>

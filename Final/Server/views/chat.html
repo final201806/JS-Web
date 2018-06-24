@@ -9,6 +9,7 @@
 	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<script type="text/javascript" src="js/webJs.js"></script>
+	<script src="js/lib/vue.js"></script>
 </head>
 <body class="grey darken-3">
 <div class="navbar-fixed">
@@ -20,86 +21,41 @@
 				<li><a href="/index">首页</a></li>
 				<li><a href="/heroes">英雄</a></li>
 				<li><a href="/items">物品</a></li>
-				<li><a href="/post">帖子</a></li>
+				<li><a href="/forum">帖子</a></li>
 				<li><a href="/chat">聊天</a></li>
 				<li><a href="/login">登录</a></li>
 			</ul>
 
 			<ul class="side-nav" id="mobile-nav">
-				<li><a href="index.html">首页</a></li>
-				<li><a href="heroes.html">英雄</a></li>
-				<li><a href="items.html">物品</a></li>
-				<li><a href="post.html">帖子</a></li>
-				<li><a href="chat.html">聊天</a></li>
-				<li><a href="login.html">登录</a></li>
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/forum">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li><a href="/login">登录</a></li>
 			</ul>
 		</div>
 	</nav>
 </div>
 
 <main>
-	<div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
-<label>聊天内容:</label><br/>
-<textarea id="content" style="height: 200px; width:300px;"></textarea>
-<br/>
-<!--<input id="sendMsg" type="text"/>-->
-<!--<button id="btn_send">发送</button>-->
-
-<!-- Modal Trigger -->
-<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-	<div class="modal-content">
-		<h4>Modal Header</h4>
+	<div class="container" id="chatRecords">
 		<ul class="collection">
-			<li>fdsf</li>
+			<li class="collection-item avatar" v-for="record in records">
+				<img src="img/items/blink_lg.png" alt="" class="circle">
+				<span class="title">{{record.client}}</span>
+				<p>{{record.msg}}</p>
+			</li>
 		</ul>
 	</div>
-	<div class="modal-footer">
-		<div>
-			<div class="row">
-				<input class="col s8 offset-s1" id="sendMsg" type="text"/>
-				<a class="waves-effect waves-light btn left">button</a>
-			</div>
-		</div>
-	</div>
-</div>
-
+	<div class="container">
+		<footer style="position: fixed;bottom: 0px;width: max-content" class="white">
+			<input id="sendMsg" type="text"/>
+			<button id="btn_send">发送</button>
+		</footer>
 	</div>
 </main>
 </body>
-<!-- 首先引入 socket.io 客户端脚本-->
-<footer class="grey darken-3 page-footer" style="background: url(img/background.jpg) no-repeat center top;">
-	<div class="row container">
-		<div class="col l6 s12">
-			<h5 class="white-text">特别感谢</h5>
-			<ul>
-				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>
-				</li>
-				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>
-				</li>
-			</ul>
-		</div>
-		<div class="col l6 s12">
-			<h5 class="white-text">联系我们</h5>
-			<ul>
-				<li><a class="grey-text text-lighten-4"
-					   href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>
-				<li>
-					<a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="footer-copyright">
-		<div class="container">
-			Made by
-			<a class="grey-text text-lighten-4" target="_blank"
-			   href="https://github.com/final201806/JS-Web">final201806</a>
-		</div>
-	</div>
-</footer>
 
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
@@ -109,41 +65,29 @@
 	console.log(user);
 	let username = JSON.parse(user.slice(2)).username;
 
+	let records = [];
 	// 监听 receiveMsg 事件，用来接收其他客户端推送的消息
 	socket.on("receiveMsg", function (data) {
-		content.value += data.client + ":" + data.msg + "\r\n";
+		// content.value += data.client + ":" + data.msg + "\r\n";
+		records.push(data);
 	});
-	let content = document.getElementById("content");
+	console.log(records)
+	new Vue({
+		el: '#chatRecords',
+		data: {
+			records: records
+		}
+	});
+
 	let sendMsg = document.getElementById("sendMsg");
 	let btn_send = document.getElementById("btn_send");
 	btn_send.addEventListener("click", function () {
 		const data = {client: username, msg: sendMsg.value};
 		//给服务端发送 sendMsg事件名的消息
 		socket.emit("sendMsg", data);
-		content.value += data.client + ":" + data.msg + "\r\n";
+		// content.value += data.client + ":" + data.msg + "\r\n";
+		records.push(data);
 		sendMsg.value = "";
 	});
-
-	const ops = {
-		method: "get",
-		// body:JSON.stringify({
-		// 	username: 'test',
-		// 	password: 'test'
-		// })
-	};
-	// fetch('/test', ops).then(res => {
-	// 	if(res.status === 200)
-	// 		return res.text();
-	// }).then(text => {
-	// 	console.log(text);
-	// }).catch(error => {
-	// 	console.log(error);
-	// });
 </script>
-<script>
-	$(document).ready(function () {
-		$('.modal').modal();
-	});
-</script>
-<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 </html>

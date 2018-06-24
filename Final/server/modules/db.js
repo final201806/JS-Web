@@ -75,7 +75,7 @@ exports.queryUser = function (username, callback) {
 			let sql = 'SELECT username, email, profile FROM user WHERE username = ?';
 			connection.query(sql, username, function (error, result) {
 				if (error) {
-					callback(error, result[0]);
+					callback(error);
 				}
 				else {
 					// console.log('checkPwd:' + result[0].password);
@@ -265,7 +265,7 @@ exports.queryPostByUsername = function (postParams, callback) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM post WHERE authorName = ?';
+			let sql = 'SELECT * FROM post WHERE authorName = ? limit 4';
 			connection.query(sql, postParams, function (error, result) {
 				if (error) {
 					callback(error, null);
@@ -391,7 +391,7 @@ exports.queryCommentByUsername = function (commentParams, callback) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM comment WHERE authorName = ?';
+			let sql = 'SELECT * FROM comment WHERE authorName = ? limit 4';
 			connection.query(sql, commentParams, function (error, result) {
 				if (error) {
 					callback(error, null);

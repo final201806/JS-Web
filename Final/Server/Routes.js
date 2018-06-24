@@ -5,9 +5,10 @@ let DB = require('./modules/db');
 module.exports = function (app) {
 	app.get('/test', function (request, response) {
 		let id = request.query.id;
-		response.render('test', { message: id });
+		response.render('test', {message: id});
 	});
 
+	//视图相关
 	app.get('', function (request, response) {
 		response.render('index', request);
 	});
@@ -16,10 +17,10 @@ module.exports = function (app) {
 	});
 	app.get('/heroes', function (request, response) {
 		response.render('heroes');
-    });
-    app.get('/items', function (request, response) {
-        response.render('items');
-    });
+	});
+	app.get('/items', function (request, response) {
+		response.render('items');
+	});
 	app.get("/chat", function (request, response) {
 		if (request.session.user == null) {
 			response.redirect('/login');
@@ -34,10 +35,21 @@ module.exports = function (app) {
 	});
 	app.get('/postDetail', function (request, response) {
 		let id = request.query.id;
-		console.log(id)
-		response.render('test', { message: id });
+		response.render('postDetail', {message: id});
+	});
+	app.get('/register', function (request, response) {
+		response.render('register');
+	});
+	app.get('/forum', function (request, response) {
+		response.render('post', request);
+	});
+	app.get('/userHome', function (request, response) {
+		let username = request.query.username;
+		response.render('userHome', {message: username});
 	});
 
+
+	//登录相关
 	app.post("/login", function (request, response) {
 		let username = request.body.username;
 		let pwd = request.body.pwd;
@@ -48,7 +60,7 @@ module.exports = function (app) {
 			else {
 				if (result.password === pwd) {
 					//设置cookie
-					response.cookie("user", {username: username}, {maxAge: 600000 , httpOnly: false});
+					response.cookie("user", {username: username}, {maxAge: 600000, httpOnly: false});
 					//设置session
 					request.session.user = {'username': username};
 
@@ -61,16 +73,16 @@ module.exports = function (app) {
 		});
 
 	});
-	app.get('/logout', function(request,response){
+	app.get('/logout', function (request, response) {
 		request.session.user = null;
 		response.clearCookie('user');
 
 		response.redirect('/login');
 	});
-	app.get('/register', function (request,response) {
-		response.render('register');
-	});
-	app.post('/register', function (request,response) {
+
+
+	//注册相关
+	app.post('/register', function (request, response) {
 		let username = request.body.username;
 		let pwd = request.body.pwd;
 		DB.addUser([username, pwd], function (error, result) {
@@ -99,9 +111,23 @@ module.exports = function (app) {
 		})
 	});
 
-	app.get('/forum', function (request, response) {
-		response.render('post', request);
+
+	//用户主页相关
+	app.get('/userDetail', function (request, response) {
+		let username = request.query.username;
+		DB.queryUser(username, function (error, result) {
+			if (error) {
+				console.log(error)
+				response.json({code: 400});
+			}
+			else {
+				response.json(result);
+			}
+		});
 	});
+
+
+	//post相关
 	app.post('/post', function (request, response) {
 		let postTitle = request.body.postTitle;
 		let postContent = request.body.postContent;
@@ -109,6 +135,7 @@ module.exports = function (app) {
 		let postCreateTime = new Date();
 		DB.addPost([postTitle, postContent, postAuthorName, postCreateTime], function (error, result) {
 			if (error) {
+				console.log(error)
 				response.json({code: 400});
 			}
 			else {
@@ -138,6 +165,7 @@ module.exports = function (app) {
 			}
 			else {
 				response.json({code: 200});
+				response.redirect('/forum')
 			}
 		});
 	});
@@ -150,7 +178,7 @@ module.exports = function (app) {
 			else {
 				if (result.length !== 0) {
 					// response.json(result[0]);
-					response.render('postDetail', result[0]);
+					response.json(result[0]);
 				}
 			}
 		});
@@ -168,27 +196,27 @@ module.exports = function (app) {
 		});
 	});
 	app.get('/userPostList', function (request, response) {
-		if (request.session.user == null) {
-			response.redirect('/login');
-		}
-		else {
-			let authorName = request.session.user.username;
-			DB.queryPostByUsername(authorName, function (error, result) {
-				if (error) {
-					response.json({code: 400});
+		let authorName = request.query.username;
+		DB.queryPostByUsername(authorName, function (error, result) {
+			if (error || result == null) {
+				response.json({code: 400});
+			}
+			else {
+				if (result.length !== 0) {
+					response.json(result);
 				}
 				else {
-					if (result.length !== 0) {
-						response.json(result);
-					}
+					response.json({code: 400});
 				}
-			});
-		}
+			}
+		});
 	});
 
+
+	//comment相关
 	app.post('/comment', function (request, response) {
 		let commentContent = request.body.commentContent;
-		let commentAuthorName = request.body.commentAuthorName;
+		let commentAuthorName = request.body.commentAuthorName;//改session获取
 		let commentCreateTime = new Date();
 		let postId = request.body.postId;
 		DB.addComment([commentContent, commentAuthorName, commentCreateTime, postId], function (error, result) {
@@ -234,26 +262,27 @@ module.exports = function (app) {
 				if (result.length !== 0) {
 					response.json(result);
 				}
+				else {
+					response.json({code: 400});
+				}
 			}
 		});
 	});
 	app.get('/userCommentList', function (request, response) {
-		if (request.session.user == null) {
-			response.redirect('/login');
-		}
-		else {
-			let authorName = request.session.user.username;
-			DB.queryCommentByUsername(authorName, function (error, result) {
-				if (error) {
-					response.json({code: 400});
+		let authorName = request.query.username;
+		DB.queryCommentByUsername(authorName, function (error, result) {
+			if (error || result == null) {
+				response.json({code: 400});
+			}
+			else {
+				if (result.length !== 0) {
+					response.json(result);
 				}
 				else {
-					if (result.length !== 0) {
-						response.json(result);
-					}
+					response.json({code: 400});
 				}
-			});
-		}
+			}
+		});
 	});
-	
+
 };
