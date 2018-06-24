@@ -22,13 +22,13 @@ module.exports = function (app) {
 		response.render('items');
 	});
 	app.get("/chat", function (request, response) {
-		if (request.session.user == null) {
-			response.redirect('/login');
-		}
-		else {
+		// if (request.session.user == null) {
+		// 	response.redirect('/login');
+		// }
+		// else {
 			// response.writeHead(200, { 'Content-Type': 'application/html' });
 			response.render('chat');
-		}
+		// }
 	});
 	app.get("/login", function (request, response) {
 		response.render('login');
