@@ -280,13 +280,33 @@ exports.queryPostByUsername = function (postParams, callback) {
 };
 
 //主页帖子列表
-exports.queryPostList = function (callback) {
+exports.queryPostList = function (pageId, callback) {
 	pool.getConnection(function (error, connection) {
 		if (error) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM post ORDER BY createTime desc';
+			let sql = 'SELECT * FROM post ORDER BY createTime desc limit ?, 5';
+			connection.query(sql, (pageId - 1) * 5, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+exports.countPosts = function(callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT COUNT(*) AS number FROM post';
 			connection.query(sql, function (error, result) {
 				if (error) {
 					callback(error, null);
