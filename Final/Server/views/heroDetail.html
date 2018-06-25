@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Heroes</title>
+    <title>heroDetail</title>
     <script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
 </head>
-<body class="grey darken-3">
+<body class="grey darken-4">
 <div class="navbar-fixed">
     <nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
         <div class="container nav-wrapper">
@@ -38,55 +38,37 @@
 </div>
 
 <main>
-    <div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
+    <div style="background: url(img/background2.jpg) no-repeat center top;height: 1000px">
         <div class="container" style="padding-top: 100px">
-            <h1 class="grey-text" style="margin-top: auto">英雄Heroes</h1>
-            <h4 class="grey-text" style="text-align: center">英雄名称</h4>
-            <p class="grey-text">英雄描述</p>
-            <div>
-                <div></div>
-                <div class="row">
-                    <div class="col l4 s12">
-                        <ul class="collapsible" data-collapsible="accordion">
-                            <li>
-                                <div class="grey-text collapsible-header active" style="background: url(img/bg-navbar.png) no-repeat center top;">力量英雄</div>
-                                <div class="collapsible-body">
-                                    <div id="lil">
-                                        <div v-for="hero in heroes">
-                                            <img v-bind:src="hero.url" v-on:click="detail(hero.id)" style="float: left;width: 25%;padding: 5px">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+            <div class="row" id="lil">
+                <div class="col l6 s12">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" v-bind:src="heroes[heroId-1].url">
+                        </div>
+                        <div class="card-content" style="background: url(img/background.jpg) no-repeat center top">
+                            <span class="activator grey-text card-title">{{heroes[heroId-1].name}}<i
+                                    class="material-icons right">more_vert</i></span>
+                        </div>
+                        <div class="card-reveal" style="background: url(img/background.jpg) no-repeat center top">
+                            <span class="card-title grey-text">{{heroes[heroId-1].name}}<i class="material-icons right">close</i></span>
+                            <p class="grey-text">{{heroes[heroId-1].comment}}</p>
+                        </div>
                     </div>
-                    <div class="col l4 s12">
-                        <ul class="collapsible" data-collapsible="accordion">
-                            <li>
-                                <div class="grey-text collapsible-header active" style="background: url(img/bg-navbar.png) no-repeat center top;">敏捷英雄</div>
-                                <div class="collapsible-body">
-                                    <div id="minj">
-                                        <div v-for="hero in heroes">
-                                            <img v-bind:src="hero.url" style="float: left;width: 25%;padding: 5px">
-                                        </div>
-                                    </div>
+                </div>
+                <div class="col l6 s12">
+                    <div v-for="skill in heroes[heroId-1].skill">
+                        <div class="card horizontal" style="background: url(img/background.jpg) no-repeat center top">
+                            <div class="card-image ">
+                                <img v-bind:src="skill.url" >
+                            </div>
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p class="card-title grey-text">{{skill.name}}</p>
+                                    <p class="grey-text">{{skill.comment}}</p>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col l4 s12">
-                        <ul class="collapsible" data-collapsible="accordion">
-                            <li>
-                                <div class="grey-text collapsible-header active" style="background: url(img/bg-navbar.png) no-repeat center top;">智力英雄</div>
-                                <div class="collapsible-body">
-                                    <div id="zhil">
-                                        <div v-for="hero in heroes">
-                                            <img v-bind:src="hero.url" style="float: left;width: 25%;padding: 5px">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,5 +107,22 @@
         </div>
     </div>
 </footer>
-<script src="js/heroes.js"></script>
+<script src="/js/heroes.js"></script>
+<script>
+    var heroid = urlToObj().id;
+    lil.heroId = heroid;
+
+    function urlToObj() {
+        var obj = {};
+        var url = location.href;//获取url
+        var arr1 = url.split('?');//将地址名和传值分离
+        var arr2 = arr1[1].split('&');//将传递的各个参数分离
+        var arr3;
+        for (let i = 0; i < arr2.length; i++) {
+            arr3 = arr2[i].split('=');//获取键对值
+            obj[arr3[0]] = arr3[1];//将键对值写入对象
+        }
+        return obj;
+    }
+</script>
 </html>
