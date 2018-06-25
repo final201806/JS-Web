@@ -42,18 +42,18 @@
 			<div id="userDetail">
 				<div class="center grey-text">
 					<img src="img/heroes/abaddon_full.png" class="circle" style="margin-top: 100px"><br>
-					<span>{{userDetail.username}}</span><br>
+					<h5>{{userDetail.username}}</h5><br>
 					<span>邮箱：</span><span v-if="userDetail.email !== null">{{userDetail.email}}</span><span v-else>该用户还没有填写邮箱</span><br>
 					<span>简介：</span><span v-if="userDetail.profile !== null">{{userDetail.profile}}</span><span v-else>该用户还没有填写简介</span><br>
 					<!--{{userDetail}}-->
 				</div>
 			</div>
 			<ul id="tabs-swipe" class="tabs center transparent" style="margin-top: 20px">
-				<li class="tab col s4 m4 l6"><a href="#swipe-1" class="grey-text">他的帖子</a></li>
-				<li class="tab col s4 m4 l6"><a href="#swipe-2" class="grey-text">他的评论</a></li>
+				<li class="tab col s4 m4 l4"><a href="#swipe-1" class="grey-text">他的帖子</a></li>
+				<li class="tab col s4 m4 l4"><a href="#swipe-2" class="grey-text">他的评论</a></li>
 			</ul>
 
-			<div id="swipe-1" class="col s12">
+			<div id="swipe-1" class="col s12 m12 l12">
 				<div class="" id="posts" v-show="isNull">
 					<div class="row" v-for="post in posts">
 						<div class="col s12 m12">
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 
-			<div id="swipe-2" class="col s12">
+			<div id="swipe-2" class="col s12 m12 l12">
 				<div class="" id="comments" v-show="isNull">
 					<div class="row" v-for="comment in comments">
 						<div class="col s12 m12">
