@@ -18,6 +18,10 @@ module.exports = function (app) {
 	app.get('/heroes', function (request, response) {
 		response.render('heroes');
 	});
+	app.get('/heroDetail',function (request, response) {
+		let id=request.query.id;
+		response.render('heroDetail', {message: id});
+    })
 	app.get('/items', function (request, response) {
 		response.render('items');
 	});
