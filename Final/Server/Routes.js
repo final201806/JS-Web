@@ -18,10 +18,10 @@ module.exports = function (app) {
 	app.get('/heroes', function (request, response) {
 		response.render('heroes');
 	});
-	app.get('/heroDetail',function (request, response) {
-		let id=request.query.id;
+	app.get('/heroDetail', function (request, response) {
+		let id = request.query.id;
 		response.render('heroDetail', {message: id});
-    })
+	})
 	app.get('/items', function (request, response) {
 		response.render('items');
 	});
@@ -39,7 +39,16 @@ module.exports = function (app) {
 	});
 	app.get('/postDetail', function (request, response) {
 		let id = request.query.id;
-		response.render('postDetail', {message: id});
+		DB.countComments(id, function (error, result) {
+			if (error) {
+				console.log('Error:' + error);
+			}
+			else {
+				let pageNumber = Math.ceil(result[0].number / 5);
+				response.render('postDetail', {message: id, pageNumber: pageNumber});
+			}
+		});
+		// response.render('postDetail', {message: id});
 	});
 	app.get('/register', function (request, response) {
 		response.render('register');
@@ -235,6 +244,7 @@ module.exports = function (app) {
 		let postId = request.body.postId;
 		DB.addComment([commentContent, commentAuthorName, commentCreateTime, postId], function (error, result) {
 			if (error) {
+				console.log(error);
 				response.json({code: 400});
 			}
 			else {
@@ -246,6 +256,7 @@ module.exports = function (app) {
 		let commentId = request.body.commentId;
 		DB.deleteComment(commentId, function (error, result) {
 			if (error) {
+				console.log(error);
 				response.json({code: 400});
 			}
 			else {
@@ -268,7 +279,8 @@ module.exports = function (app) {
 	});
 	app.get('/comment', function (request, response) {
 		let postId = request.query.postId;
-		DB.queryComment(postId, function (error, result) {
+		let pageId = request.query.pageId || 1;
+		DB.queryComment([postId, (pageId - 1) * 5], function (error, result) {
 			if (error) {
 				response.json({code: 400});
 			}

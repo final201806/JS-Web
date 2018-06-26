@@ -265,7 +265,7 @@ exports.queryPostByUsername = function (postParams, callback) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM post WHERE authorName = ? limit 4';
+			let sql = 'SELECT * FROM post WHERE authorName = ? ORDER BY createTime desc limit 4';
 			connection.query(sql, postParams, function (error, result) {
 				if (error) {
 					callback(error, null);
@@ -390,7 +390,7 @@ exports.queryComment = function (commentParams, callback) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM comment WHERE postId=?';
+			let sql = 'SELECT * FROM comment WHERE postId=? limit ?, 5';
 			connection.query(sql, commentParams, function (error, result) {
 				if (error) {
 					callback(error, null);
@@ -411,8 +411,28 @@ exports.queryCommentByUsername = function (commentParams, callback) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM comment WHERE authorName = ? limit 4';
+			let sql = 'SELECT * FROM comment WHERE authorName = ? ORDER BY createTime desc limit 4';
 			connection.query(sql, commentParams, function (error, result) {
+				if (error) {
+					callback(error, null);
+				}
+				else {
+					callback(null, result);
+				}
+				connection.release();
+			});
+		}
+	});
+};
+
+exports.countComments = function (postId, callback) {
+	pool.getConnection(function (error, connection) {
+		if (error) {
+			callback(error, null);
+		}
+		else {
+			let sql = 'SELECT COUNT(*) AS number FROM comment WHERE postId = ?';
+			connection.query(sql, postId, function (error, result) {
 				if (error) {
 					callback(error, null);
 				}

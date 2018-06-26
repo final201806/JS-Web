@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>论坛</title>
 	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<script src="js/lib/vue.js"></script>
 </head>
-<body>
+<body style="background: url(img/background2.jpg) no-repeat center top;">
 <main>
 	<div>
 		<div>
@@ -45,7 +45,7 @@
 			<div class="container" id="postList" style="margin-top: 20px">
 				<div class="row" style="margin: 0px" v-for="post in posts">
 					<div class="col s12 m12">
-						<div class="card grey darken-3">
+						<div class="card" style="background: url(img/background.jpg) no-repeat center top;">
 							<div class="card-content white-text">
 								<a class="card-title" :href="'/postDetail?id=' + post.id">{{post.title}}</a>
 								<p>{{post.content}}</p>
@@ -69,7 +69,7 @@
 </main>
 
 <div class="fixed-action-btn">
-	<a class="btn-floating btn-small red" href="#addPost">
+	<a class="btn-floating btn-small grey darken-3" href="#addPost">
 		<i class="large material-icons">mode_edit</i>
 	</a>
 </div>
@@ -92,14 +92,9 @@
 </style>
 <script type="text/x-template" id="page">
 	<ul class="pagination">
-		<li :class="{ 'disabled':current === 1 }" @click="current-- && goto(current--)"><a href="#"><i
-				class="material-icons">chevron_left</i></a></li>
-		<li v-for="index in pages" @click="goto(index)" :class="{'active':current === index, 'waves-effect':true}"
-		    :key="index">
-			<a href="#">{{index}}</a>
-		</li>
-		<li :class="{ 'disabled':canNext }" @click="current++ && goto(current++)"><a href="#!"><i
-				class="material-icons">chevron_right</i></a></li>
+		<li :class="{ 'disabled':current === 1 }" @click="current-- && goto(current--)"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+		<li v-for="index in pages" @click="goto(index)" :class="{'active':current === index, 'waves-effect':true}" :key="index"><a href="#">{{index}}</a></li>
+		<li v-bind:class="{ 'disabled':current === allpage }" @click="current++ && goto(current++)"><a href="#"><i class="material-icons">chevron_right</i></a></li>
 	</ul>
 </script>
 <script>
@@ -197,7 +192,7 @@
 			return {
 				current: 1,
 				showItem: 5,
-				allpage: pageNumber,
+				allpage: parseInt(pageNumber),
 				canNext: false
 			}
 		},
@@ -231,7 +226,8 @@
 				//这里可以发送ajax请求
 				// console.log(this.current)
 				// console.log(this.allpage)
-				this.canNext = (this.current === this.allpage)
+				// this.canNext = (this.current === this.allpage);
+				// console.log(this.canNext)
 				getPostList(index);
 			}
 		}
