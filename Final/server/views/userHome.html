@@ -11,18 +11,21 @@
 	<script src="js/lib/vue.js"></script>
 </head>
 <body class="grey darken-3">
-<div class="navbar-fixed">
+<div class="navbar-fixed" id="login">
 	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
 		<div class="container nav-wrapper">
-			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+			<a href="/index" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
 			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul class="right hide-on-med-and-down">
-				<li><a href="/index">首页</a></li>
-				<li><a href="/heroes">英雄</a></li>
-				<li><a href="/items">物品</a></li>
-				<li><a href="/forum">帖子</a></li>
-				<li><a href="/chat">聊天</a></li>
-				<li><a href="/login">登录</a></li>
+				<li><a class="grey-text" href="/index">首页</a></li>
+				<li><a class="grey-text" href="/heroes">英雄</a></li>
+				<li><a class="grey-text" href="/items">物品</a></li>
+				<li><a class="grey-text" href="/forum">帖子</a></li>
+				<li><a class="grey-text" href="/chat">聊天</a></li>
+				<li v-if="isLogin"><a class="grey-text" >Hello!&nbsp;&nbsp;{{username}}</a></li>
+				<li v-else><a href="/login" class="grey-text" >登录</a></li>
+				<li v-if="isLogin"><a href="/logout" class="grey-text">注销</a></li>
+				<li v-else><a href="/register" class="grey-text" >注册</a></li>
 			</ul>
 
 			<ul class="side-nav" id="mobile-nav">
@@ -99,100 +102,6 @@
 </body>
 <script>
 	let username = '<%=message%>';
-	//用户信息
-	fetch('/userDetail?username=' + username, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		}
-	}).then(response => {
-		if (response.status === 200) {
-			return response.json();
-		}
-		else {
-			new Vue({
-				el: '#userDetail',
-				data: {
-					isNull: false
-				}
-			});
-		}
-	}).then(json => {
-		console.log(json)
-		new Vue({
-			el: '#userDetail',
-			data: {
-				userDetail: json,
-				isNull: false
-			}
-		});
-	}).catch(error => {
-		console.log(error);
-	});
-
-	//用户发帖
-	fetch('/userPostList?username=' + username, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		}
-	}).then(response => {
-		if (response.status === 200) {
-			return response.json();
-		}
-		else {
-			new Vue({
-				el: '#posts',
-				data: {
-					isNull: false
-				}
-			});
-		}
-	}).then(json => {
-		console.log(json)
-		new Vue({
-			el: '#posts',
-			data: {
-				posts: json,
-				isNull: json.code !== 400
-			}
-		});
-	}).catch(error => {
-		console.log(error);
-	});
-
-	//用户评论
-	fetch('/userCommentList?username=' + username, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		}
-	}).then(response => {
-		if (response.status === 200) {
-			return response.json();
-		}
-		else {
-			new Vue({
-				el: '#comments',
-				data: {
-					isNull: false
-				}
-			});
-		}
-	}).then(json => {
-		console.log(json)
-		new Vue({
-			el: '#comments',
-			data: {
-				comments: json,
-				isNull: json.code !== 400
-			}
-		});
-	}).catch(error => {
-		console.log(error);
-	});
 </script>
+<script src="js/userHome.js"></script>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>客户端1</title>
+	<title>聊天室</title>
 	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
@@ -12,128 +12,76 @@
 	<script src="js/lib/vue.js"></script>
 </head>
 <body class="grey darken-3" style="background: url(img/background.jpg) no-repeat center top;">
-<div class="navbar-fixed">
-	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
-		<div class="container nav-wrapper">
-			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
-			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
-			<ul class="right hide-on-med-and-down">
-				<li><a class="grey-text" href="/index">首页</a></li>
-				<li><a class="grey-text" href="/heroes">英雄</a></li>
-				<li><a class="grey-text" href="/items">物品</a></li>
-				<li><a class="grey-text" href="/forum">帖子</a></li>
-				<li><a class="grey-text" href="/chat">聊天</a></li>
-				<li><a class="grey-text" href="/login">登录</a></li>
-			</ul>
+<div id="chat">
+	<div class="navbar-fixed" id="login">
+		<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
+			<div class="container nav-wrapper">
+				<a href="/index" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+				<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+				<ul class="right hide-on-med-and-down">
+					<li><a class="grey-text" href="/index">首页</a></li>
+					<li><a class="grey-text" href="/heroes">英雄</a></li>
+					<li><a class="grey-text" href="/items">物品</a></li>
+					<li><a class="grey-text" href="/forum">帖子</a></li>
+					<li><a class="grey-text" href="/chat">聊天</a></li>
+					<li v-if="isLogin"><a class="grey-text">Hello!&nbsp;&nbsp;{{username}}</a></li>
+					<li v-else><a href="/login" class="grey-text">登录</a></li>
+					<li v-if="isLogin"><a href="/logout" class="grey-text">注销</a></li>
+					<li v-else><a href="/register" class="grey-text">注册</a></li>
+				</ul>
 
-			<ul class="side-nav" id="mobile-nav">
-				<li><a href="/index">首页</a></li>
-				<li><a href="/heroes">英雄</a></li>
-				<li><a href="/items">物品</a></li>
-				<li><a href="/forum">帖子</a></li>
-				<li><a href="/chat">聊天</a></li>
-				<li><a href="/login">登录</a></li>
-			</ul>
-		</div>
-	</nav>
-</div>
-
-<main>
-	<div>
-		<div class="container" id="chatRecords" style="margin-top: 30px">
-			<div style="position: absolute; height: 504px; width: inherit; overflow: auto" id="chatDiv">
-				<ul class="collection" style="margin: 0">
-					<li class="collection-item avatar" v-for="record in records">
-						<img src="img/items/blink_lg.png" alt="" class="circle">
-						<span class="title">{{record.client}}</span>
-						<p>{{record.msg}}</p>
-					</li>
+				<ul class="side-nav" id="mobile-nav">
+					<li><a href="/index">首页</a></li>
+					<li><a href="/heroes">英雄</a></li>
+					<li><a href="/items">物品</a></li>
+					<li><a href="/forum">帖子</a></li>
+					<li><a href="/chat">聊天</a></li>
+					<li><a href="/login">登录</a></li>
 				</ul>
 			</div>
-		</div>
-		<div class="container center" style="padding-top: 510px" id="sendFrame">
-			<div>
-				<div class="white col s12">
-					<div class="row" v-if="canChat">
-						<div class="input-field col s8 m9 l10">
-							<input id="sendMsg" type="text" maxlength="20" style="margin-left: 10px" v-model="msg">
+		</nav>
+	</div>
+
+	<main>
+		<div>
+			<div class="container" id="chatRecords" style="margin-top: 30px">
+				<div style="position: absolute; height: 504px; width: inherit; overflow: auto" id="chatDiv">
+					<ul class="collection" style="margin: 0">
+						<li class="collection-item avatar" v-for="record in records" >
+							<img src="img/items/blink_lg.png" alt="" class="circle">
+							<span class="title">{{record.client}}</span>
+							<p>{{record.msg}}</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="container center" style="padding-top: 510px" id="sendFrame">
+				<div>
+					<div class="white col s12">
+						<div class="row" v-if="isLogin">
+							<div class="input-field col s8 m9 l10">
+								<input id="sendMsg" type="text" maxlength="20" style="margin-left: 10px" v-model="msg">
+							</div>
+							<div class="col s4 m3 l2 right">
+								<button class="waves-effect waves-light btn" id="btn_send"
+								        style="margin-top: 20px; margin-left: -10px" v-on:click="send">发送
+								</button>
+							</div>
 						</div>
-						<div class="col s4 m3 l2 right">
-							<button class="waves-effect waves-light btn" id="btn_send"
-							        style="margin-top: 20px; margin-left: -10px" v-on:click="send">发送
-							</button>
-						</div>
-					</div>
-					<div class="row" v-else style="height: 50px">
-						<div class="col s12 m12 l12" >
-							<a class="waves-effect waves-light btn" id="btn_login" style="margin-top: 7px" href="/login">登录参与聊天</a>
+						<div class="row" v-else style="height: 50px">
+							<div class="col s12 m12 l12">
+								<a class="waves-effect waves-light btn" id="btn_login" style="margin-top: 7px"
+								   href="/login">登录参与聊天</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</main>
+	</main>
+</div>
 </body>
 
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
-	let socket = io.connect();//连接服务端
-
-	let user = getck('user');
-	let canChat = false;
-	let username = '';
-
-	if (user !== null && user.trim() !== '') {
-		username = JSON.parse(user.slice(2)).username;
-		canChat = true;
-	}
-
-	let records = [];
-	// 监听 receiveMsg 事件，用来接收其他客户端推送的消息
-	socket.on("receiveMsg", function (data) {
-		// records.push(data);
-		sf.receive(data)
-	});
-
-	let sf = new Vue({
-		el: '#sendFrame',
-		data: {
-			canChat: canChat,
-			msg: ''
-		},
-		methods: {
-			send : function () {
-				if (this.msg.replace(/^\s+|\s+$/g,"") === null || this.msg.replace(/^\s+|\s+$/g,"") === '') {
-
-				}
-				else {
-					const data = {client: username, msg: this.msg};
-					//给服务端发送 sendMsg事件名的消息
-					socket.emit("sendMsg", data);
-					records.push(data);
-					this.msg = '';
-					this.$nextTick(function () {
-						chatDiv.scrollTop = chatDiv.scrollHeight;
-					});
-				}
-			},
-			receive: function (data) {
-				records.push(data);
-				this.$nextTick(function () {
-					chatDiv.scrollTop = chatDiv.scrollHeight;
-				});
-			}
-		}
-	});
-
-	new Vue({
-		el: '#chatRecords',
-		data: {
-			records: records
-		},
-	});
-
-	let chatDiv = document.getElementById('chatDiv');
-</script>
+<script type="text/javascript" src="js/chat.js"></script>
 </html>

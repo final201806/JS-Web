@@ -15,11 +15,9 @@ let login = new Vue({
 			if (user !== null && user !== '') {
 				this.username = JSON.parse(user.slice(2)).username;
 				this.isLogin = true;
-				console.log('in')
 			}
 			else {
 				this.isLogin = false;
-				console.log('out')
 			}
 		}
 	}

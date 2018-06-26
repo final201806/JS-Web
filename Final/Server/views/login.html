@@ -21,7 +21,7 @@
 				<li><a class="grey-text" href="/items">物品</a></li>
 				<li><a class="grey-text" href="/forum">帖子</a></li>
 				<li><a class="grey-text" href="/chat">聊天</a></li>
-				<li><a class="grey-text" href="/login">登录</a></li>
+				<li><a class="grey-text" href="/register">注册</a></li>
 			</ul>
 
 			<ul class="side-nav" id="mobile-nav">
@@ -30,87 +30,82 @@
 				<li><a href="/items">物品</a></li>
 				<li><a href="/forum">帖子</a></li>
 				<li><a href="/chat">聊天</a></li>
-				<li><a href="/login">登录</a></li>
+				<li><a href="/register">注册</a></li>
 			</ul>
 		</div>
 	</nav>
 </div>
 
 <main>
-	<div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
-<div class="container">
-	<div class="section">
-		<div class="row">
-			<div class="col s12 m6 16">
-				<h2 class="title">Welcome</h2>
-				<div class="content">
-					<h5>Welcome back!</h5>
+	<div style="background: url(img/background.jpg) no-repeat center top;height: 800px">
+		<div class="container">
+			<div class="section">
+				<div class="row">
+					<div class="col s12 m6 16" style="margin-top: 100px">
+						<h2 class="title grey-text">Welcome</h2>
+						<div class="content grey-text">
+							<h5>Welcome back!</h5>
+						</div>
+					</div>
+					<div class="col s12 m6 16" style="margin-top: 100px">
+						<form class="card-panel " action="login" method="post">
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="username" type="text" class="validate" name="username">
+									<label for="username">用户名</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="password" type="password" class="validate" name="pwd">
+									<label for="password">密码</label>
+								</div>
+							</div>
+
+							<div class="row center-align">
+								<div class="input-field col s12">
+									<input value="登录" type="submit" class="waves-effect waves-light btn">
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
-			<div class="col s12 m6 16">
-				<form class="card-panel " action="login" method="post">
-					<div class="row">
-						<div class="input-field col s12">
-							<input id="username" type="text" class="validate" name="username">
-							<label for="username">用户名</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<input id="password" type="password" class="validate" name="pwd">
-							<label for="password">密码</label>
-						</div>
-					</div>
-					<!--<div class="row">-->
-						<!--<div class="input-field col s12">-->
-							<!--<input id="email" type="email" class="validate">-->
-							<!--<label for="email">Email</label>-->
-						<!--</div>-->
-					<!--</div>-->
-					<div class="row center-align">
-						<div class="input-field col s12">
-							<input value="登录" type="submit" class="waves-effect waves-light btn-small">
-						</div>
-					</div>
-				</form>
-			</div>
 		</div>
-	</div>
-</div>
 	</div>
 </main>
 
 </body>
 
-<footer class="grey darken-3 page-footer" style="background: url(img/background.jpg) no-repeat center top;">
-	<div class="row container">
-		<div class="col l6 s12">
-			<h5 class="white-text">特别感谢</h5>
-			<ul>
-				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>
-				</li>
-				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>
-				</li>
-			</ul>
-		</div>
-		<div class="col l6 s12">
-			<h5 class="white-text">联系我们</h5>
-			<ul>
-				<li><a class="grey-text text-lighten-4"
-					   href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>
-				<li>
-					<a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="footer-copyright">
-		<div class="container">
-			Made by
-			<a class="grey-text text-lighten-4" target="_blank"
-			   href="https://github.com/final201806/JS-Web">final201806</a>
-		</div>
-	</div>
-</footer>
+<!--<footer class="grey darken-3 page-footer" style="background: url(img/background.jpg) no-repeat center top;">-->
+	<!--<div class="row container">-->
+		<!--<div class="col l6 s12">-->
+			<!--<h5 class="white-text">特别感谢</h5>-->
+			<!--<ul>-->
+				<!--<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>-->
+				<!--</li>-->
+				<!--<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>-->
+				<!--</li>-->
+			<!--</ul>-->
+		<!--</div>-->
+		<!--<div class="col l6 s12">-->
+			<!--<h5 class="white-text">联系我们</h5>-->
+			<!--<ul>-->
+				<!--<li><a class="grey-text text-lighten-4"-->
+				       <!--href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>-->
+				<!--<li>-->
+					<!--<a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>-->
+				<!--</li>-->
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+	<!--<div class="footer-copyright">-->
+		<!--<div class="container">-->
+			<!--Made by-->
+			<!--<a class="grey-text text-lighten-4" target="_blank"-->
+			   <!--href="https://github.com/final201806/JS-Web">final201806</a>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</footer>-->
 
 </html>

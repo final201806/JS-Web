@@ -55,7 +55,8 @@ let postDetail = new Vue({
 		commentContent: '',
 		postId: 1,
 		totalComments: 0,
-		// page: 1
+		isLogin: false,
+		username: ''
 	},
 	methods: {
 		setPostId: function (postId) {
@@ -130,6 +131,34 @@ let postDetail = new Vue({
 			}).catch(error => {
 				console.log(error);
 			});
-		}
+		},
+		getCookie: function() {
+			let user = getCookie('user');
+			if (user !== null && user !== '') {
+				this.username = JSON.parse(user.slice(2)).username;
+				this.isLogin = true;
+				console.log('in')
+			}
+			else {
+				this.isLogin = false;
+				console.log('out')
+			}
+		},
 	}
 });
+
+postDetail.getCookie();
+
+function getCookie(name) {
+	let cookie = document.cookie.split("; ");
+	for (let i = 0; i < cookie.length; i++) {
+		let arr = cookie[i].split("=");
+		if (name === arr[0]) {
+			if (arr.length > 1)
+				return unescape(arr[1]);
+			else
+				return "";
+		}
+	}
+	return "";
+}

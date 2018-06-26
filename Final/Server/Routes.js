@@ -1,7 +1,5 @@
 let DB = require('./modules/db');
 
-// console.log(DB.Test())
-
 module.exports = app => {
 	app.get('/test', function (request, response) {
 		let id = request.query.id;
@@ -35,13 +33,7 @@ module.exports = app => {
 	});
 	app.get("/chat", function (request, response) {
 		console.log(request.session.user)
-		// if (request.session.user == null) {
-		// 	response.redirect('/login');
-		// }
-		// else {
-		// response.writeHead(200, { 'Content-Type': 'application/html' });
 		response.render('chat');
-		// }
 	});
 	app.get("/login", function (request, response) {
 		response.render('login');
@@ -94,10 +86,6 @@ module.exports = app => {
 					//设置session
 					request.session.user = {username: username};
 
-					console.log(request.session.user);
-					// console.log(request.session.user.username);
-					console.log(username);
-					// response.send(request.session.user);
 					response.render('index', {message: username});
 
 				} else {

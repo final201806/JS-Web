@@ -3,21 +3,48 @@
 <head>
 	<meta charset="UTF-8">
 	<title>注册</title>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
+	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
+	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+<div class="navbar-fixed">
+	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
+		<div class="container nav-wrapper">
+			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a class="grey-text" href="/index">首页</a></li>
+				<li><a class="grey-text" href="/heroes">英雄</a></li>
+				<li><a class="grey-text" href="/items">物品</a></li>
+				<li><a class="grey-text" href="/forum">帖子</a></li>
+				<li><a class="grey-text" href="/chat">聊天</a></li>
+				<li><a class="grey-text" href="/login">登录</a></li>
+			</ul>
+
+			<ul class="side-nav" id="mobile-nav">
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/forum">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li><a href="/login">登录</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
 <div class="container">
 	<div class="section">
 		<div class="row">
-			<div class="col s12 l6">
+			<div class="col s12 l6" style="margin-top: 60px">
 				<h2 class="title">Welcome</h2>
 				<div class="content">
 					<h5>Welcome to join us!</h5>
 				</div>
 			</div>
-			<div class="col s12 l6">
+			<div class="col s12 l6" style="margin-top: 60px">
 				<form class="card-panel " action="register" method="post">
 					<div class="row">
 						<div class="input-field col s12">
@@ -39,7 +66,7 @@
 					</div>
 					<div class="row center-align">
 						<div class="input-field col s12">
-							<input value="注册" type="submit" class="waves-effect waves-light btn-small">
+							<input value="注册" type="submit" class="waves-effect waves-light btn">
 						</div>
 					</div>
 				</form>
@@ -47,7 +74,7 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+<!--<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>-->
 <script>
 	function isExisted() {
 		let usernameObj = document.getElementById('username');

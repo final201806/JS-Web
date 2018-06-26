@@ -14,20 +14,21 @@
 <main>
 	<div>
 		<div>
-			<div class="navbar-fixed">
-				<nav class="grey darken-4" role="navigation"
-				     style="background: url(img/bg-navbar.png) no-repeat center top;">
+			<div class="navbar-fixed" id="login">
+				<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
 					<div class="container nav-wrapper">
 						<a href="/index" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
-						<a id="menu" data-activates="mobile-nav" class="button-collapse"><i
-								class="material-icons">menu</i></a>
+						<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
 						<ul class="right hide-on-med-and-down">
 							<li><a class="grey-text" href="/index">首页</a></li>
 							<li><a class="grey-text" href="/heroes">英雄</a></li>
 							<li><a class="grey-text" href="/items">物品</a></li>
 							<li><a class="grey-text" href="/forum">帖子</a></li>
 							<li><a class="grey-text" href="/chat">聊天</a></li>
-							<li><a class="grey-text" href="/login">登录</a></li>
+							<li v-if="isLogin"><a class="grey-text" >Hello!&nbsp;&nbsp;{{username}}</a></li>
+							<li v-else><a href="/login" class="grey-text" >登录</a></li>
+							<li v-if="isLogin"><a href="/logout" class="grey-text">注销</a></li>
+							<li v-else><a href="/register" class="grey-text" >注册</a></li>
 						</ul>
 
 						<ul class="side-nav" id="mobile-nav">
@@ -97,192 +98,10 @@
 		<li v-bind:class="{ 'disabled':current === allpage }" @click="current++ && goto(current++)"><a href="#"><i class="material-icons">chevron_right</i></a></li>
 	</ul>
 </script>
-<script>
-	//模态框
-	$(document).ready(function () {
-		$('.modal').modal();
-	});
 
+<script>
 	let pageId = '<%=message%>';
 	let pageNumber = '<%=pageNumber%>';
-	// console.log(pageNumber);
-	// let page;
-	// (function (pageNumber) {
-	// 	page = new Number(pageNumber);
-	// })(pageNumber);
-	getPostList(pageId);
-
-	let addPostVue = new Vue({
-		el: '#addPost',
-		data: {
-			title: '',
-			content: '你好'
-		},
-		methods: {
-			addPost: function () {
-				// 增
-				fetch('/post', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'Accept': 'application/json'
-					},
-					body: JSON.stringify({
-						postTitle: this.title,
-						postContent: this.content,
-						postAuthorName: 'test',
-					}),
-				}).then(response => {
-					if (response.status === 200) {
-						return response.json();
-					}
-				}).then(json => {
-					if (json.code === 200)
-						window.location.href = '/forum'
-					// document.body.innerText = json.toString();
-				}).catch(error => {
-					console.log(error);
-				});
-			}
-		}
-	});
-
-	let postListVue = new Vue({
-		el: '#postList',
-		data: {
-			posts: ''
-		},
-		methods: {
-			postDetail: function (postId) {
-				fetch('/index', {
-					method: 'GET',
-					// headers: {
-					// 	'Content-Type': 'application/json',
-					// 	'Accept': 'application/json'
-					// }
-				}).catch(error => {
-					console.log(error);
-				})
-			}
-		}
-	});
-
-	//查
-	function getPostList(pageId) {
-		fetch('/postList?pageId=' + pageId, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			}
-		}).then(response => {
-			if (response.status === 200) {
-				return response.json();
-			}
-		}).then(json => {
-			postListVue.posts = json;
-		}).catch(error => {
-			console.log(error);
-		});
-	}
-
-	Vue.component("page", {
-		template: "#page",
-		data: function () {
-			return {
-				current: 1,
-				showItem: 5,
-				allpage: parseInt(pageNumber),
-				canNext: false
-			}
-		},
-		computed: {
-			pages: function () {
-				let i;
-				let pag = [];
-				if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
-					//总页数和要显示的条数那个大就显示多少条
-					i = Math.min(this.showItem, this.allpage);
-					while (i) {
-						pag.unshift(i--);
-					}
-				} else { //当前页数大于显示页数了
-					let middle = this.current - Math.floor(this.showItem / 2);
-					i = this.showItem;
-					if (middle > (this.allpage - this.showItem)) {
-						middle = (this.allpage - this.showItem) + 1
-					}
-					while (i--) {
-						pag.push(middle++);
-					}
-				}
-				return pag;
-			}
-		},
-		methods: {
-			goto: function (index) {
-				if (index === this.current || index > this.allpage) return;
-				this.current = index;
-				//这里可以发送ajax请求
-				// console.log(this.current)
-				// console.log(this.allpage)
-				// this.canNext = (this.current === this.allpage);
-				// console.log(this.canNext)
-				getPostList(index);
-			}
-		}
-	});
-
-	let pageVue = new Vue({
-		el: '#myPage',
-	});
-
-	//改
-	// fetch('/post', {
-	// 	method: 'PUT',
-	// 	headers : {
-	// 		'Content-Type': 'application/json',
-	// 		'Accept': 'application/json'
-	// 	},
-	// 	body: JSON.stringify({
-	// 		postTitle: '4up1',
-	// 		postContent: '4up1',
-	// 		postId: 5,
-	// 	}),
-	// 	redirect: "follow",
-	// }).then(response => {
-	// 	if (response.status === 200) {
-	// 		return response.json();
-	// 	}
-	// }).then(json => {
-	// 	console.log(json.code)
-	// 	document.body.innerText = json.toString();
-	// }).catch(error => {
-	// 	console.log(error);
-	// });
-
-	//删
-	// fetch('/post', {
-	// 	method: 'DELETE',
-	// 	headers : {
-	// 		'Content-Type': 'application/json',
-	// 		'Accept': 'application/json'
-	// 	},
-	// 	body: JSON.stringify({
-	// 		// postTitle: '4up',
-	// 		// postContent: '4up',
-	// 		postId: 4,
-	// 	}),
-	// 	redirect: "follow",
-	// }).then(response => {
-	// 	if (response.status === 200) {
-	// 		return response.json();
-	// 	}
-	// }).then(json => {
-	// 	console.log(json.code)
-	// 	document.body.innerText = json.toString();
-	// }).catch(error => {
-	// 	console.log(error);
-	// });
 </script>
+<script src="js/post.js"></script>
 </html>
