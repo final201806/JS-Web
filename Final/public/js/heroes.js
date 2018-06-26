@@ -75,6 +75,14 @@ var lil=new Vue({
             let url = "/heroDetail?id=" + this.heroes[index-1].id;
             console.log(url);
             window.location.href=url;
+        },
+        changeName: function (name,comment) {
+            document.getElementById("heroName").innerHTML=name;
+            document.getElementById("heroComment").innerHTML=comment;
+        },
+        changeBack: function () {
+            document.getElementById("heroName").innerHTML="英雄名称";
+            document.getElementById("heroComment").innerHTML="英雄描述";
         }
     }
 })
@@ -100,6 +108,14 @@ var minj=new Vue({
             let url = "/mheroDetail?id=" + this.heroes[index-1].id;
             console.log(url);
             window.location.href=url;
+        },
+        changeName: function (name,comment) {
+            document.getElementById("heroName").innerHTML=name;
+            document.getElementById("heroComment").innerHTML=comment;
+        },
+        changeBack: function () {
+            document.getElementById("heroName").innerHTML="英雄名称";
+            document.getElementById("heroComment").innerHTML="英雄描述";
         }
     }
 })
@@ -125,6 +141,14 @@ var zhil=new Vue({
             let url = "/zheroDetail?id=" + this.heroes[index-1].id;
             console.log(url);
             window.location.href=url;
+        },
+        changeName: function (name,comment) {
+            document.getElementById("heroName").innerHTML=name;
+            document.getElementById("heroComment").innerHTML=comment;
+        },
+        changeBack: function () {
+            document.getElementById("heroName").innerHTML="英雄名称";
+            document.getElementById("heroComment").innerHTML="英雄描述";
         }
     }
 })
