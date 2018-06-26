@@ -30,8 +30,8 @@ module.exports = function (app) {
 		// 	response.redirect('/login');
 		// }
 		// else {
-			// response.writeHead(200, { 'Content-Type': 'application/html' });
-			response.render('chat');
+		// response.writeHead(200, { 'Content-Type': 'application/html' });
+		response.render('chat');
 		// }
 	});
 	app.get("/login", function (request, response) {
@@ -45,7 +45,16 @@ module.exports = function (app) {
 		response.render('register');
 	});
 	app.get('/forum', function (request, response) {
-		response.render('post', request);
+		let pageId = request.query.pageId || 1;
+		DB.countPosts(function (error, result) {
+			if (error) {
+				console.log('Error:' + error);
+			}
+			else {
+				let pageNumber = Math.ceil(result[0].number / 5);
+				response.render('post', {message: pageId, pageNumber: pageNumber});
+			}
+		});
 	});
 	app.get('/userHome', function (request, response) {
 		let username = request.query.username;
@@ -139,7 +148,7 @@ module.exports = function (app) {
 		let postCreateTime = new Date();
 		DB.addPost([postTitle, postContent, postAuthorName, postCreateTime], function (error, result) {
 			if (error) {
-				console.log(error)
+				console.log(error);
 				response.json({code: 400});
 			}
 			else {
@@ -188,7 +197,8 @@ module.exports = function (app) {
 		});
 	});
 	app.get('/postList', function (request, response) {
-		DB.queryPostList(function (error, result) {
+		let pageId = request.query.pageId || 1;
+		DB.queryPostList(pageId, function (error, result) {
 			if (error) {
 				response.json({code: 400});
 			}

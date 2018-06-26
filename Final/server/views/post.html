@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Title</title>
 	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
 	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,7 +12,7 @@
 </head>
 <body>
 <main>
-	<div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
+	<div>
 		<div>
 			<div class="navbar-fixed">
 				<nav class="grey darken-4" role="navigation"
@@ -42,8 +42,8 @@
 				</nav>
 			</div>
 
-			<div class="container" id="postList" style="margin-top: 100px">
-				<div class="row" v-for="post in posts">
+			<div class="container" id="postList" style="margin-top: 20px">
+				<div class="row" style="margin: 0px" v-for="post in posts">
 					<div class="col s12 m12">
 						<div class="card grey darken-3">
 							<div class="card-content white-text">
@@ -59,13 +59,18 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="container center" id="myPage">
+				<page></page>
+			</div>
+
 		</div>
 	</div>
 </main>
 
 <div class="fixed-action-btn">
 	<a class="btn-floating btn-small red" href="#addPost">
-		<i class="large material-icons" >mode_edit</i>
+		<i class="large material-icons">mode_edit</i>
 	</a>
 </div>
 
@@ -80,13 +85,39 @@
 	</div>
 </div>
 </body>
+<style type="text/css">
+	.disabled {
+		pointer-events: none;
+	}
+</style>
+<script type="text/x-template" id="page">
+	<ul class="pagination">
+		<li :class="{ 'disabled':current === 1 }" @click="current-- && goto(current--)"><a href="#"><i
+				class="material-icons">chevron_left</i></a></li>
+		<li v-for="index in pages" @click="goto(index)" :class="{'active':current === index, 'waves-effect':true}"
+		    :key="index">
+			<a href="#">{{index}}</a>
+		</li>
+		<li :class="{ 'disabled':canNext }" @click="current++ && goto(current++)"><a href="#!"><i
+				class="material-icons">chevron_right</i></a></li>
+	</ul>
+</script>
 <script>
 	//模态框
-	$(document).ready(function(){
+	$(document).ready(function () {
 		$('.modal').modal();
 	});
 
-	new Vue({
+	let pageId = '<%=message%>';
+	let pageNumber = '<%=pageNumber%>';
+	// console.log(pageNumber);
+	// let page;
+	// (function (pageNumber) {
+	// 	page = new Number(pageNumber);
+	// })(pageNumber);
+	getPostList(pageId);
+
+	let addPostVue = new Vue({
 		el: '#addPost',
 		data: {
 			title: '',
@@ -97,7 +128,7 @@
 				// 增
 				fetch('/post', {
 					method: 'POST',
-					headers : {
+					headers: {
 						'Content-Type': 'application/json',
 						'Accept': 'application/json'
 					},
@@ -106,15 +137,13 @@
 						postContent: this.content,
 						postAuthorName: 'test',
 					}),
-					redirect: "follow",
 				}).then(response => {
 					if (response.status === 200) {
 						return response.json();
 					}
 				}).then(json => {
-					console.log(json.code)
-						if (json.code === 200)
-							window.location.href = '/forum'
+					if (json.code === 200)
+						window.location.href = '/forum'
 					// document.body.innerText = json.toString();
 				}).catch(error => {
 					console.log(error);
@@ -123,43 +152,94 @@
 		}
 	});
 
-	//查
-	fetch('/postList', {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		}
-	}).then(response => {
-		if (response.status === 200) {
-			return response.json();
-		}
-	}).then(json => {
-		new Vue({
-			el: '#postList',
-			data: {
-				posts: json
-			},
-			methods: {
-				postDetail: function (postId) {
-					fetch('/index', {
-						method: 'GET',
-						// headers: {
-						// 	'Content-Type': 'application/json',
-						// 	'Accept': 'application/json'
-						// }
-					}).catch(error => {
-						console.log(error);
-					})
-				}
+	let postListVue = new Vue({
+		el: '#postList',
+		data: {
+			posts: ''
+		},
+		methods: {
+			postDetail: function (postId) {
+				fetch('/index', {
+					method: 'GET',
+					// headers: {
+					// 	'Content-Type': 'application/json',
+					// 	'Accept': 'application/json'
+					// }
+				}).catch(error => {
+					console.log(error);
+				})
 			}
-		});
-	}).catch(error => {
-		console.log(error);
+		}
 	});
 
+	//查
+	function getPostList(pageId) {
+		fetch('/postList?pageId=' + pageId, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			}
+		}).then(response => {
+			if (response.status === 200) {
+				return response.json();
+			}
+		}).then(json => {
+			postListVue.posts = json;
+		}).catch(error => {
+			console.log(error);
+		});
+	}
 
+	Vue.component("page", {
+		template: "#page",
+		data: function () {
+			return {
+				current: 1,
+				showItem: 5,
+				allpage: pageNumber,
+				canNext: false
+			}
+		},
+		computed: {
+			pages: function () {
+				let i;
+				let pag = [];
+				if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+					//总页数和要显示的条数那个大就显示多少条
+					i = Math.min(this.showItem, this.allpage);
+					while (i) {
+						pag.unshift(i--);
+					}
+				} else { //当前页数大于显示页数了
+					let middle = this.current - Math.floor(this.showItem / 2);
+					i = this.showItem;
+					if (middle > (this.allpage - this.showItem)) {
+						middle = (this.allpage - this.showItem) + 1
+					}
+					while (i--) {
+						pag.push(middle++);
+					}
+				}
+				return pag;
+			}
+		},
+		methods: {
+			goto: function (index) {
+				if (index === this.current || index > this.allpage) return;
+				this.current = index;
+				//这里可以发送ajax请求
+				// console.log(this.current)
+				// console.log(this.allpage)
+				this.canNext = (this.current === this.allpage)
+				getPostList(index);
+			}
+		}
+	});
 
+	let pageVue = new Vue({
+		el: '#myPage',
+	});
 
 	//改
 	// fetch('/post', {
