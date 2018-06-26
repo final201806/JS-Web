@@ -39,9 +39,9 @@
 
 <main>
     <div style="background: url(img/background.jpg) no-repeat center top;height: 1000px">
-        <div class="container" style="padding-top: 100px">
-            <h1 class="grey-text" style="margin-top: auto">物品Items</h1>
-            <h4 class="grey-text" style="text-align: center">物品名称</h4>
+        <div class="container" style="padding-top: 20px">
+            <h3 class="grey-text" style="margin-top: auto">物品Items</h3>
+            <h5 id="itemName" class="grey-text" style="text-align: center">物品名称</h5>
             <div>
                 <div class="row center" style="margin-top: 50px">
                     <div class="col m6 s12" style="margin-bottom: 50px">
@@ -50,7 +50,7 @@
                         <img v-bind:src="a.url" >
                         <p class="grey-text" >{{a.name}}</p>
                             <div v-for="item in a.item" >
-                                <img v-bind:src="item.url" style="max-width: 80%;padding: 5px">
+                                <img v-bind:src="item.url" v-on:mouseover="changeName(item.name)" v-on:mouseout="changeBack" style="max-width: 80%;padding: 5px" >
                             </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 <img v-bind:src="a.url" >
                                 <p class="grey-text" >{{a.name}}</p>
                                 <div v-for="item in a.item" >
-                                    <img v-bind:src="item.url" style="max-width: 80%;padding: 5px">
+                                    <img v-bind:src="item.url" v-on:mouseover="changeName(item.name)" v-on:mouseout="changeBack" style="max-width: 80%;padding: 5px">
                                 </div>
                             </div>
                         </div>
