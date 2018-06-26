@@ -21,7 +21,15 @@ module.exports = function (app) {
 	app.get('/heroDetail', function (request, response) {
 		let id = request.query.id;
 		response.render('heroDetail', {message: id});
-	})
+    });
+    app.get('/mheroDetail',function (request, response) {
+        let id=request.query.id;
+        response.render('mheroDetail', {message: id});
+    });
+    app.get('/zheroDetail',function (request, response) {
+        let id=request.query.id;
+        response.render('zheroDetail', {message: id});
+    });
 	app.get('/items', function (request, response) {
 		response.render('items');
 	});
