@@ -1,104 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DOTA2 wiki</title>
-    <script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
-    <link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
-    <script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta charset="UTF-8">
+	<title>DOTA2 wiki</title>
+	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
+	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script src="js/lib/vue.js"></script>
 </head>
 <body class="grey darken-3">
-<div class="navbar-fixed">
-    <nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
-        <div class="container nav-wrapper">
-            <a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
-            <a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="/index">首页</a></li>
-                <li><a href="/heroes">英雄</a></li>
-                <li><a href="/items">物品</a></li>
-                <li><a href="/forum">帖子</a></li>
-                <li><a href="/chat">聊天</a></li>
-                <li><a href="/login">登录</a></li>
-            </ul>
+<div class="navbar-fixed" id="login">
+	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
+		<div class="container nav-wrapper">
+			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/forum">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li v-if="isLogin"><a>Hello!&nbsp;&nbsp;{{username}}</a></li>
+				<li v-else><a href="/login">登录</a></li>
+				<li v-if="isLogin"><a href="/logout">注销</a></li>
+				<li v-else><a href="/register">注册</a></li>
+			</ul>
 
-            <ul class="side-nav" id="mobile-nav">
-                <li><a href="/index">首页</a></li>
-                <li><a href="/heroes">英雄</a></li>
-                <li><a href="/items">物品</a></li>
-                <li><a href="/forum">帖子</a></li>
-                <li><a href="/chat">聊天</a></li>
-                <li><a href="/login">登录</a></li>
-            </ul>
-        </div>
-    </nav>
+			<ul class="side-nav" id="mobile-nav">
+				<li><a href="/index">首页</a></li>
+				<li><a href="/heroes">英雄</a></li>
+				<li><a href="/items">物品</a></li>
+				<li><a href="/forum">帖子</a></li>
+				<li><a href="/chat">聊天</a></li>
+				<li><a href="/login">登录</a></li>
+			</ul>
+		</div>
+	</nav>
 </div>
 
 <div class="grey darken-3">
-    <div>
-        <div>
-            <video autoplay loop width="100%">
-                <source type="video/webm" src="img/index/keyart.webm">
-            </video>
-        </div>
-    </div>
-    <div class="grey darken-3">
-        <div class="row container grey darken-3">
-            <h2 class="header">DOTA2</h2>
-            <p class="white-text">《刀塔2》也被称作《DOTA2》，由《DOTA》的地图核心制作者IceFrog（冰蛙）联手美国Valve公司研发的一款游戏，于2013年4月28日开始测试，发布中文名为“刀塔”，是该系列的第二部作品。
-                《刀塔2》完整继承了原作《DotA》一百多位的英雄，并脱离了上一代作品《DOTA》所依赖的《魔兽争霸Ⅲ》引擎的多人即时对战游戏，《刀塔2》的世界由天辉和夜魇两个阵营所辖区域组成，有上、中、下三条主要的作战道路相连接，中间以河流为界。每个阵营分别由五位玩家所扮演的英雄担任守护者，他们将以守护己方远古遗迹并摧毁敌方远古遗迹为使命，通过提升等级、赚取金钱、购买装备和击杀敌方英雄等手段达成胜利。</p>
-        </div>
-    </div>
-    <div style="background: url(img/background.jpg) no-repeat center top;">
-        <div class="carousel" style="width: 100%">
-            <a class="carousel-item" href="#"><img src="/img/index/1.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/2.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/3.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/4.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/5.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/6.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/7.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/8.png"></a>
-            <a class="carousel-item" href="#"><img src="/img/index/9.png"></a>
-        </div>
-    </div>
+	<div>
+		<div>
+			<video autoplay loop width="100%">
+				<source type="video/webm" src="img/index/keyart.webm">
+			</video>
+		</div>
+	</div>
+	<div class="grey darken-3">
+		<div class="row container grey darken-3">
+			<h2 class="header">DOTA2</h2>
+			<p class="white-text">
+				《刀塔2》也被称作《DOTA2》，由《DOTA》的地图核心制作者IceFrog（冰蛙）联手美国Valve公司研发的一款游戏，于2013年4月28日开始测试，发布中文名为“刀塔”，是该系列的第二部作品。
+				《刀塔2》完整继承了原作《DotA》一百多位的英雄，并脱离了上一代作品《DOTA》所依赖的《魔兽争霸Ⅲ》引擎的多人即时对战游戏，《刀塔2》的世界由天辉和夜魇两个阵营所辖区域组成，有上、中、下三条主要的作战道路相连接，中间以河流为界。每个阵营分别由五位玩家所扮演的英雄担任守护者，他们将以守护己方远古遗迹并摧毁敌方远古遗迹为使命，通过提升等级、赚取金钱、购买装备和击杀敌方英雄等手段达成胜利。</p>
+		</div>
+	</div>
+	<div style="background: url(img/background.jpg) no-repeat center top;">
+		<div class="carousel" style="width: 100%">
+			<a class="carousel-item" href="#"><img src="/img/index/1.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/2.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/3.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/4.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/5.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/6.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/7.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/8.png"></a>
+			<a class="carousel-item" href="#"><img src="/img/index/9.png"></a>
+		</div>
+	</div>
 </div>
-
 
 
 </body>
 
 <footer class="grey darken-3 page-footer" style="background: url(img/background.jpg) no-repeat center top;">
-    <div class="row container">
-        <div class="col l6 s12">
-            <h5 class="white-text">特别感谢</h5>
-            <ul>
-                <li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>
-                </li>
-                <li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col l6 s12">
-            <h5 class="white-text">联系我们</h5>
-            <ul>
-                <li><a class="grey-text text-lighten-4"
-                       href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>
-                <li>
-                    <a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            Made by
-            <a class="grey-text text-lighten-4" target="_blank"
-               href="https://github.com/final201806/JS-Web">final201806</a>
-        </div>
-    </div>
+	<div class="row container">
+		<div class="col l6 s12">
+			<h5 class="white-text">特别感谢</h5>
+			<ul>
+				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>
+				</li>
+				<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col l6 s12">
+			<h5 class="white-text">联系我们</h5>
+			<ul>
+				<li><a class="grey-text text-lighten-4"
+				       href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>
+				<li>
+					<a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			Made by
+			<a class="grey-text text-lighten-4" target="_blank"
+			   href="https://github.com/final201806/JS-Web">final201806</a>
+		</div>
+	</div>
 </footer>
 
 <script src="js/index.js" type="text/javascript" charset="utf-8"></script>

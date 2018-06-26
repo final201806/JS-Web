@@ -1,4 +1,5 @@
-function getck(sname) {//获取单个cookies
+
+function getck(sname) {
 	var acookie = document.cookie.split("; ");
 	for (var i = 0; i < acookie.length; i++) {
 		var arr = acookie[i].split("=");

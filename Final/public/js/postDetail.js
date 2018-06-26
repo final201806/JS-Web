@@ -99,7 +99,7 @@ let postDetail = new Vue({
 			}).then(json => {
 				if (json !== null) {
 					this.detail = json;
-					console.log(this.detail)
+					console.log(this.detail);
 				}
 			}).catch(error => {
 				console.log(error);

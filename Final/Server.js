@@ -21,13 +21,12 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
-		secret: 'test',
-		proxy: true,
-		resave: true,
-		saveUninitialized: false,
-		cookie: {maxAge: 600000}
-	})
-);
+	secret: 'test',
+	// name: 'user',
+	resave: true,
+	saveUninitialized: false,
+	cookie: {maxAge: 600000}
+}));
 
 //router
 require('./server/routes')(app);
@@ -49,7 +48,7 @@ io.on("connection", function (clientSocket) {
 			console.log(error);
 		}
 		else {
-			for (let i = result.length - 1; i >= 0 ; i--) {
+			for (let i = result.length - 1; i >= 0; i--) {
 				clientSocket.emit("receiveMsg", {client: result[i].client, msg: result[i].msg});
 			}
 		}

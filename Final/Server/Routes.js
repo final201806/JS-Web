@@ -2,7 +2,7 @@ let DB = require('./modules/db');
 
 // console.log(DB.Test())
 
-module.exports = function (app) {
+module.exports = app => {
 	app.get('/test', function (request, response) {
 		let id = request.query.id;
 		response.render('test', {message: id});
@@ -34,6 +34,7 @@ module.exports = function (app) {
 		response.render('items');
 	});
 	app.get("/chat", function (request, response) {
+		console.log(request.session.user)
 		// if (request.session.user == null) {
 		// 	response.redirect('/login');
 		// }
@@ -56,7 +57,6 @@ module.exports = function (app) {
 				response.render('postDetail', {message: id, pageNumber: pageNumber});
 			}
 		});
-		// response.render('postDetail', {message: id});
 	});
 	app.get('/register', function (request, response) {
 		response.render('register');
@@ -92,9 +92,14 @@ module.exports = function (app) {
 					//设置cookie
 					response.cookie("user", {username: username}, {maxAge: 600000, httpOnly: false});
 					//设置session
-					request.session.user = {'username': username};
+					request.session.user = {username: username};
 
-					response.redirect('/index');
+					console.log(request.session.user);
+					// console.log(request.session.user.username);
+					console.log(username);
+					// response.send(request.session.user);
+					response.render('index', {message: username});
+
 				} else {
 					request.error = '用户名密码错误';
 					response.render('login', request);
@@ -107,7 +112,7 @@ module.exports = function (app) {
 		request.session.user = null;
 		response.clearCookie('user');
 
-		response.redirect('/login');
+		response.redirect('/index');
 	});
 
 
@@ -147,7 +152,7 @@ module.exports = function (app) {
 		let username = request.query.username;
 		DB.queryUser(username, function (error, result) {
 			if (error) {
-				console.log(error)
+				console.log(error);
 				response.json({code: 400});
 			}
 			else {
