@@ -10,7 +10,7 @@ let addPostVue = new Vue({
 	el: '#addPost',
 	data: {
 		title: '',
-		content: '你好'
+		content: ''
 	},
 	methods: {
 		addPost: function () {

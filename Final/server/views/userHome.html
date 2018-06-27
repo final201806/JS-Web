@@ -47,8 +47,8 @@
 				<div class="center grey-text">
 					<img src="img/heroes/dragon_knight_lg.png" class="circle" style="margin-top: 20px"><br>
 					<h5>{{userDetail.username}}</h5><br>
-					<span>邮箱：</span><span v-if="userDetail.email !== null">{{userDetail.email}}</span><span v-else>该用户还没有填写邮箱</span><br>
-					<span>简介：</span><span v-if="userDetail.profile !== null">{{userDetail.profile}}</span><span v-else>该用户还没有填写简介</span><br>
+					<span>邮箱：</span><span v-if="userDetail.email !== null && userDetail.email !== ''">{{userDetail.email}}</span><span v-else>该用户还没有填写邮箱</span><br>
+					<span>简介：</span><span v-if="userDetail.profile !== null && userDetail.profile !== ''">{{userDetail.profile}}</span><span v-else>该用户还没有填写简介</span><br>
 					<!--{{userDetail}}-->
 				</div>
 			</div>

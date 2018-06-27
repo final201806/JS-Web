@@ -77,9 +77,9 @@
 
 <div id="addPost" class="modal bottom-sheet" style="height: 300px">
 	<div class="modal-content" style="height: 240px">
-		<h4>Modal Header</h4>
-		<input v-model="title" placeholder="编辑我……">
-		<textarea v-model="content" placeholder="多行文本输入……"></textarea>
+		<h4>发帖</h4>
+		<input v-model="title" placeholder="请输入标题">
+		<textarea class="materialize-textarea" v-model="content" placeholder="请输入内容"></textarea>
 	</div>
 	<div class="modal-footer">
 		<button class="modal-close waves-effect waves-green btn-flat" v-on:click="addPost">发布</button>

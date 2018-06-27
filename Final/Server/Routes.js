@@ -32,7 +32,7 @@ module.exports = app => {
 		response.render('items');
 	});
 	app.get("/chat", function (request, response) {
-		console.log(request.session.user)
+		// console.log(request.session.user)
 		response.render('chat');
 	});
 	app.get("/login", function (request, response) {
@@ -113,7 +113,7 @@ module.exports = app => {
 				response.json({code: 400});
 			}
 			else {
-				response.json({code: 200});
+				response.render('login');
 			}
 		});
 	});
@@ -154,7 +154,7 @@ module.exports = app => {
 	app.post('/post', function (request, response) {
 		let postTitle = request.body.postTitle;
 		let postContent = request.body.postContent;
-		let postAuthorName = request.body.postAuthorName;//改session获取
+		let postAuthorName = request.body.postAuthorName;
 		let postCreateTime = new Date();
 		DB.addPost([postTitle, postContent, postAuthorName, postCreateTime], function (error, result) {
 			if (error) {
@@ -240,7 +240,7 @@ module.exports = app => {
 	//comment相关
 	app.post('/comment', function (request, response) {
 		let commentContent = request.body.commentContent;
-		let commentAuthorName = request.body.commentAuthorName;//改session获取
+		let commentAuthorName = request.body.commentAuthorName;
 		let commentCreateTime = new Date();
 		let postId = request.body.postId;
 		DB.addComment([commentContent, commentAuthorName, commentCreateTime, postId], function (error, result) {

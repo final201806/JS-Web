@@ -83,8 +83,8 @@
 
 		<div id="addComment" class="modal bottom-sheet" style="height: 300px">
 			<div class="modal-content" style="height: 240px">
-				<h4>Modal Header</h4>
-				<textarea v-model="commentContent" placeholder="请输入评论内容"></textarea>
+				<h4>评论</h4>
+				<textarea class="materialize-textarea" v-model="commentContent" placeholder="请输入评论内容"></textarea>
 			</div>
 			<div class="modal-footer">
 				<button class="modal-close waves-effect waves-green btn-flat" v-on:click="addComment">发布</button>
