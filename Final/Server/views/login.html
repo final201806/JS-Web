@@ -10,10 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body class="grey darken-3">
-<div class="navbar-fixed">
+<div id="login">
 	<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
 		<div class="container nav-wrapper">
-			<a href="index.html" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+			<a href="/index" class="brand-logo hide-on-small-only"><img style="max-width: 85%" src="img/logo.png"/></a>
 			<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul class="right hide-on-med-and-down">
 				<li><a class="grey-text" href="/index">首页</a></li>
@@ -21,43 +21,56 @@
 				<li><a class="grey-text" href="/items">物品</a></li>
 				<li><a class="grey-text" href="/forum">帖子</a></li>
 				<li><a class="grey-text" href="/chat">聊天</a></li>
-				<li><a class="grey-text" href="/register">注册</a></li>
+				<li><a class="grey-text" href="/aboutUs">关于我们</a></li>
+				<li v-else><a href="/register" class="grey-text">注册</a></li>
 			</ul>
 
 			<ul class="side-nav" id="mobile-nav">
-				<li><a href="/index">首页</a></li>
-				<li><a href="/heroes">英雄</a></li>
-				<li><a href="/items">物品</a></li>
-				<li><a href="/forum">帖子</a></li>
-				<li><a href="/chat">聊天</a></li>
-				<li><a href="/register">注册</a></li>
+				<li>
+					<div class="userView">
+						<div class="background">
+							<img src="img/aboutus/2.jpg">
+						</div>
+						<a style="padding-bottom: 10px; padding-top: 10px"><img class="circle"
+						                                                        src="img/items/aegis_lg.png"></a>
+						<a href="/login" style="padding-bottom: 10px"><span class="white-text name">登录</span></a>
+					</div>
+				</li>
+				<li><a class="waves-effect" href="/index">首页</a></li>
+				<li><a class="waves-effect" href="/heroes">英雄</a></li>
+				<li><a class="waves-effect" href="/items">物品</a></li>
+				<li><a class="waves-effect" href="/forum">帖子</a></li>
+				<li><a class="waves-effect" href="/chat">聊天</a></li>
+				<li><a class="waves-effect" href="/aboutUs">关于我们</a></li>
 			</ul>
 		</div>
 	</nav>
 </div>
 
 <main>
-	<div style="background: url(img/background.jpg) no-repeat center top;height: 800px">
+	<div style="background: url(img/background2.jpg) no-repeat center top;height: 800px">
 		<div class="container">
 			<div class="section">
 				<div class="row">
-					<div class="col s12 m6 16" style="margin-top: 100px">
-						<h2 class="title grey-text">Welcome</h2>
-						<div class="content grey-text">
+					<div class="col s12 m6 16" style="margin-top: 20px">
+						<div class="hide-on-med-and-down" style="height: 100px"></div>
+						<h2 class="title grey-text center-align">Welcome</h2>
+						<div class="content grey-text center-align">
 							<h5>Welcome back!</h5>
 						</div>
 					</div>
-					<div class="col s12 m6 16" style="margin-top: 100px">
-						<form class="card-panel " action="login" method="post">
+					<div class="col s12 m6 16" style="margin-top: 20px">
+						<div class="hide-on-med-and-down" style="height: 100px"></div>
+						<form class="card-panel" action="login" method="post" style=" background: black;opacity: 0.5">
 							<div class="row">
 								<div class="input-field col s12">
-									<input id="username" type="text" class="validate" name="username">
+									<input id="username" type="text" class="validate white-text" name="username">
 									<label for="username">用户名</label>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<input id="password" type="password" class="validate" name="pwd">
+									<input id="password" type="password" class="validate white-text" name="pwd">
 									<label for="password">密码</label>
 								</div>
 							</div>
@@ -74,38 +87,8 @@
 		</div>
 	</div>
 </main>
-
 </body>
-
-<!--<footer class="grey darken-3 page-footer" style="background: url(img/background.jpg) no-repeat center top;">-->
-	<!--<div class="row container">-->
-		<!--<div class="col l6 s12">-->
-			<!--<h5 class="white-text">特别感谢</h5>-->
-			<!--<ul>-->
-				<!--<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.materializecss.cn/">Materialize-UI中文网</a>-->
-				<!--</li>-->
-				<!--<li><a class="grey-text text-lighten-4" target="_blank" href="http://www.dota2.com.cn/">DOTA2-刀塔官方网站</a>-->
-				<!--</li>-->
-			<!--</ul>-->
-		<!--</div>-->
-		<!--<div class="col l6 s12">-->
-			<!--<h5 class="white-text">联系我们</h5>-->
-			<!--<ul>-->
-				<!--<li><a class="grey-text text-lighten-4"-->
-				       <!--href="mailto:chrischen0405@gmail.com">chrischen0405@gmail.com</a></li>-->
-				<!--<li>-->
-					<!--<a class="grey-text text-lighten-4" href="mailto:ll614657115@gmail.com">ll614657115@gmail.com</a>-->
-				<!--</li>-->
-			<!--</ul>-->
-		<!--</div>-->
-	<!--</div>-->
-	<!--<div class="footer-copyright">-->
-		<!--<div class="container">-->
-			<!--Made by-->
-			<!--<a class="grey-text text-lighten-4" target="_blank"-->
-			   <!--href="https://github.com/final201806/JS-Web">final201806</a>-->
-		<!--</div>-->
-	<!--</div>-->
-<!--</footer>-->
-
+<script>
+	$("#menu").sideNav();
+</script>
 </html>

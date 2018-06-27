@@ -176,7 +176,7 @@ Vue.component("page", {
 			// console.log(this.allpage)
 			// this.canNext = (this.current === this.allpage);
 			// console.log(this.canNext)
-			getPostList(index);
+			postListVue.getPostList(index);
 		}
 	}
 });

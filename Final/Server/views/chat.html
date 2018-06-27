@@ -3,20 +3,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>聊天室</title>
-	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>-->
 	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
-	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<script type="text/javascript" src="js/webJs.js"></script>
 	<script src="js/lib/vue.min.js"></script>
+	<style>
+		.collection li.collection-item:not(.active):hover {
+			background-color: #dddddd;
+		}
+	</style>
 </head>
-<body class="grey darken-3" style="background: url(img/background.jpg) no-repeat center top;">
+<body style="background: url(img/background2.jpg) no-repeat center top;">
 <div id="chat">
-	<div class="navbar-fixed" id="login">
+	<div id="login">
 		<nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
 			<div class="container nav-wrapper">
-				<a href="/index" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+				<a href="/index" class="brand-logo hide-on-small-only"><img style="max-width: 85%" src="img/logo.png"/></a>
 				<a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
 				<ul class="right hide-on-med-and-down">
 					<li><a class="grey-text" href="/index">首页</a></li>
@@ -24,6 +29,7 @@
 					<li><a class="grey-text" href="/items">物品</a></li>
 					<li><a class="grey-text" href="/forum">帖子</a></li>
 					<li><a class="grey-text" href="/chat">聊天</a></li>
+					<li><a class="grey-text" href="/aboutUs">关于我们</a></li>
 					<li v-if="isLogin"><a class="grey-text">Hello!&nbsp;&nbsp;{{username}}</a></li>
 					<li v-else><a href="/login" class="grey-text">登录</a></li>
 					<li v-if="isLogin"><a href="/logout" class="grey-text">注销</a></li>
@@ -31,12 +37,22 @@
 				</ul>
 
 				<ul class="side-nav" id="mobile-nav">
-					<li><a href="/index">首页</a></li>
-					<li><a href="/heroes">英雄</a></li>
-					<li><a href="/items">物品</a></li>
-					<li><a href="/forum">帖子</a></li>
-					<li><a href="/chat">聊天</a></li>
-					<li><a href="/login">登录</a></li>
+					<li>
+						<div class="userView">
+							<div class="background">
+								<img src="img/aboutus/2.jpg">
+							</div>
+							<a style="padding-bottom: 10px; padding-top: 10px"><img class="circle"
+							                                                        src="img/items/aegis_lg.png"></a>
+							<a href="/login" style="padding-bottom: 10px"><span class="white-text name">登录</span></a>
+						</div>
+					</li>
+					<li><a class="waves-effect" href="/index">首页</a></li>
+					<li><a class="waves-effect" href="/heroes">英雄</a></li>
+					<li><a class="waves-effect" href="/items">物品</a></li>
+					<li><a class="waves-effect" href="/forum">帖子</a></li>
+					<li><a class="waves-effect" href="/chat">聊天</a></li>
+					<li><a class="waves-effect" href="/aboutUs">关于我们</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -45,7 +61,7 @@
 	<main>
 		<div>
 			<div class="container" id="chatRecords" style="margin-top: 30px">
-				<div style="position: absolute; height: 504px; width: inherit; overflow: auto" id="chatDiv">
+				<div class="card" style="position: fixed; bottom: 85px; height: 74%; width: inherit; overflow: auto" id="chatDiv">
 					<ul class="collection" style="margin: 0">
 						<li class="collection-item avatar" v-for="record in records" >
 							<img src="img/items/blink_lg.png" alt="" class="circle">
@@ -55,10 +71,10 @@
 					</ul>
 				</div>
 			</div>
-			<div class="container center" style="padding-top: 510px" id="sendFrame">
-				<div>
+			<div class="container center" id="sendFrame">
+				<div class="card" style="position: fixed; width: inherit;bottom: 0px">
 					<div class="white col s12">
-						<div class="row" v-if="isLogin">
+						<div class="row" v-if="isLogin" style="height: 50px">
 							<div class="input-field col s8 m9 l10">
 								<input id="sendMsg" type="text" maxlength="20" style="margin-left: 10px" v-model="msg">
 							</div>
@@ -70,7 +86,7 @@
 						</div>
 						<div class="row" v-else style="height: 50px">
 							<div class="col s12 m12 l12">
-								<a class="waves-effect waves-light btn" id="btn_login" style="margin-top: 7px"
+								<a class="waves-effect waves-light btn" id="btn_login" style="margin-top: 15px"
 								   href="/login">登录参与聊天</a>
 							</div>
 						</div>
@@ -80,6 +96,8 @@
 		</div>
 	</main>
 </div>
+<script src="js/lib/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 </body>
 
 <script src="/socket.io/socket.io.js"></script>
