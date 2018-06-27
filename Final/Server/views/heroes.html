@@ -9,6 +9,11 @@
     <script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="js/lib/vue.min.js"></script>
+    <style>
+        .a:hover{
+            background: grey;
+        }
+    </style>
 </head>
 <body class="grey darken-3">
 <div id="login">
@@ -67,7 +72,7 @@
                                 <div class="collapsible-body">
                                     <div id="lil">
                                         <div v-for="hero in heroes">
-                                            <img class="materialboxed" v-bind:src="hero.url" v-on:click="detail(hero.id)" v-on:mouseover="changeName(hero.name,hero.comment)" v-on:mouseout="changeBack" style="float: left;width: 25%;padding: 5px">
+                                            <img class="a" v-bind:src="hero.url" v-on:click="detail(hero.id)" v-on:mouseover="changeName(hero.name,hero.comment)" v-on:mouseout="changeBack" style="float: left;width: 25%;padding: 5px">
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +86,7 @@
                                 <div class="collapsible-body">
                                     <div id="minj">
                                         <div v-for="hero in heroes">
-                                            <img class="materialboxed" v-bind:src="hero.url" v-on:click="detail(hero.id)" v-on:mouseover="changeName(hero.name,hero.comment)" v-on:mouseout="changeBack" style="float: left;width: 25%;padding: 5px">
+                                            <img class="a" v-bind:src="hero.url" v-on:click="detail(hero.id)" v-on:mouseover="changeName(hero.name,hero.comment)" v-on:mouseout="changeBack" style="float: left;width: 25%;padding: 5px">
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +100,7 @@
                                 <div class="collapsible-body">
                                     <div id="zhil">
                                         <div v-for="hero in heroes">
-                                            <img class="materialboxed" v-bind:src="hero.url" v-on:click="detail(hero.id)" v-on:mouseover="changeName(hero.name,hero.comment)" v-on:mouseout="changeBack" style="float: left;width: 25%;padding: 5px">
+                                            <img class="a" v-bind:src="hero.url" v-on:click="detail(hero.id)" v-on:mouseover="changeName(hero.name,hero.comment)" v-on:mouseout="changeBack" style="float: left;width: 25%;padding: 5px">
                                         </div>
                                     </div>
                                 </div>

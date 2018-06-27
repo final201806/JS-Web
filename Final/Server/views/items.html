@@ -9,12 +9,17 @@
     <script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="js/lib/vue.min.js"></script>
+    <style>
+        .a:hover{
+            background: grey;
+        }
+    </style>
 </head>
 <body class="grey darken-3">
-<div class="navbar-fixed" id="login">
+<div id="login">
     <nav class="grey darken-4" role="navigation" style="background: url(img/bg-navbar.png) no-repeat center top;">
         <div class="container nav-wrapper">
-            <a href="/index" class="brand-logo"><img style="max-width: 85%" src="img/logo.png"/></a>
+            <a href="/index" class="brand-logo hide-on-small-only"><img style="max-width: 85%" src="img/logo.png"/></a>
             <a id="menu" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a class="grey-text" href="/index">首页</a></li>
@@ -22,6 +27,7 @@
                 <li><a class="grey-text" href="/items">物品</a></li>
                 <li><a class="grey-text" href="/forum">帖子</a></li>
                 <li><a class="grey-text" href="/chat">聊天</a></li>
+                <li><a class="grey-text" href="/aboutUs">关于我们</a></li>
                 <li v-if="isLogin"><a class="grey-text" >Hello!&nbsp;&nbsp;{{username}}</a></li>
                 <li v-else><a href="/login" class="grey-text" >登录</a></li>
                 <li v-if="isLogin"><a href="/logout" class="grey-text">注销</a></li>
@@ -29,12 +35,22 @@
             </ul>
 
             <ul class="side-nav" id="mobile-nav">
-                <li><a href="/index">首页</a></li>
-                <li><a href="/heroes">英雄</a></li>
-                <li><a href="/items">物品</a></li>
-                <li><a href="/forum">帖子</a></li>
-                <li><a href="/chat">聊天</a></li>
-                <li><a href="/login">登录</a></li>
+                <li>
+                    <div class="userView">
+                        <div class="background">
+                            <img src="img/aboutus/2.jpg">
+                        </div>
+                        <a style="padding-bottom: 10px; padding-top: 10px"><img class="circle"
+                                                                                src="img/items/aegis_lg.png"></a>
+                        <a href="/login" style="padding-bottom: 10px"><span class="white-text name">登录</span></a>
+                    </div>
+                </li>
+                <li><a class="waves-effect" href="/index">首页</a></li>
+                <li><a class="waves-effect" href="/heroes">英雄</a></li>
+                <li><a class="waves-effect" href="/items">物品</a></li>
+                <li><a class="waves-effect" href="/forum">帖子</a></li>
+                <li><a class="waves-effect" href="/chat">聊天</a></li>
+                <li><a class="waves-effect" href="/aboutUs">关于我们</a></li>
             </ul>
         </div>
     </nav>
@@ -53,7 +69,7 @@
                         <img v-bind:src="a.url" >
                         <p class="grey-text" >{{a.name}}</p>
                             <div v-for="item in a.item" >
-                                <img v-bind:src="item.url" v-on:mouseover="changeName(item.name)" v-on:mouseout="changeBack" style="max-width: 80%;padding: 5px" >
+                                <img class="a" v-bind:src="item.url" v-on:mouseover="changeName(item.name)" v-on:mouseout="changeBack" style="max-width: 80%;padding: 5px" >
                             </div>
                             </div>
                         </div>
@@ -64,7 +80,7 @@
                                 <img v-bind:src="a.url" >
                                 <p class="grey-text" >{{a.name}}</p>
                                 <div v-for="item in a.item" >
-                                    <img v-bind:src="item.url" v-on:mouseover="changeName(item.name)" v-on:mouseout="changeBack" style="max-width: 80%;padding: 5px">
+                                    <img class="a" v-bind:src="item.url" v-on:mouseover="changeName(item.name)" v-on:mouseout="changeBack" style="max-width: 80%;padding: 5px">
                                 </div>
                             </div>
                         </div>
