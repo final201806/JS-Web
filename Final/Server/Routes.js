@@ -31,6 +31,9 @@ module.exports = app => {
 	app.get('/items', function (request, response) {
 		response.render('items');
 	});
+    app.get('/aboutUs', function (request, response) {
+        response.render('aboutUs');
+    });
 	app.get("/chat", function (request, response) {
 		// console.log(request.session.user)
 		response.render('chat');
