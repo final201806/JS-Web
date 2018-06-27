@@ -93,6 +93,9 @@ let login = new Vue({
 				console.log('out')
 			}
 		}
+	},
+	mounted: function () {
+		$("#menu").sideNav();
 	}
 });
 

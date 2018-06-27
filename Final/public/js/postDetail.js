@@ -143,6 +143,9 @@ let postDetail = new Vue({
 				console.log('out')
 			}
 		},
+	},
+	mounted: function () {
+		$("#menu").sideNav();
 	}
 });
 

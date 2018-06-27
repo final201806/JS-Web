@@ -1,7 +1,7 @@
 $("#menu").sideNav();
 $('.parallax').parallax();
 $('.carousel').carousel();
-$('.collapsible').collapsible()
+$('.collapsible').collapsible();
 
 let login = new Vue({
 	el: '#login',
@@ -20,6 +20,9 @@ let login = new Vue({
 				this.isLogin = false;
 			}
 		}
+	},
+	mounted: function () {
+		$("#menu").sideNav();
 	}
 });
 

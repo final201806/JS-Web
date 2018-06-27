@@ -43,6 +43,9 @@ let chatVue = new Vue({
 				console.log('out')
 			}
 		},
+	},
+	mounted: function () {
+		$("#menu").sideNav();
 	}
 });
 
