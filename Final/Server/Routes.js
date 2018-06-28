@@ -48,7 +48,7 @@ module.exports = app => {
 				console.log('Error:' + error);
 			}
 			else {
-				let pageNumber = Math.ceil(result[0].number / 5);
+				let pageNumber = Math.ceil(result[0].number / 6);
 				response.render('postDetail', {message: id, pageNumber: pageNumber});
 			}
 		});
@@ -284,7 +284,7 @@ module.exports = app => {
 	app.get('/comment', function (request, response) {
 		let postId = request.query.postId;
 		let pageId = request.query.pageId || 1;
-		DB.queryComment([postId, (pageId - 1) * 5], function (error, result) {
+		DB.queryComment([postId, (pageId - 1) * 6], function (error, result) {
 			if (error) {
 				response.json({code: 400});
 			}

@@ -390,7 +390,7 @@ exports.queryComment = function (commentParams, callback) {
 			callback(error, null);
 		}
 		else {
-			let sql = 'SELECT * FROM comment WHERE postId=? limit ?, 5';
+			let sql = 'SELECT * FROM comment WHERE postId=? limit ?, 6';
 			connection.query(sql, commentParams, function (error, result) {
 				if (error) {
 					callback(error, null);

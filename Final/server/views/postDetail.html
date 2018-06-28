@@ -73,8 +73,8 @@
 				</div>
 			</div>
 			<div id="comments" v-show="commentIsNull">
-				<div class="row" v-for="comment in comments" style="margin: 0px;">
-					<div class="col s12 m12">
+				<div class="row" style="margin: 0px;">
+					<div class="col s12 m6 l6" v-for="comment in comments" >
 						<div class="card grey darken-4" style="margin: 5px">
 							<div class="card-content white-text">
 								<p>{{comment.content}}</p>
