@@ -6,7 +6,6 @@
 	<script src="js/lib/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<link href='https://fonts.loli.net/icon?family=Material+Icons' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css"/>
-	<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
@@ -52,22 +51,22 @@
 		<div class="section">
 			<div class="row">
 				<div class="col s12 l6" style="margin-top: 60px">
-					<h2 class="title center-align">Welcome</h2>
-					<div class="content center-align">
+					<h2 class="title center-align grey-text">Welcome</h2>
+					<div class="content center-align grey-text">
 						<h5>Welcome to join us!</h5>
 					</div>
 				</div>
 				<div class="col s12 l6" style="margin-top: 60px">
-					<form class="card-panel " action="register" method="post">
+					<form class="card-panel " action="register" method="post" style=" background-color: rgba(0,0,0,0.2);">
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="username" type="text" class="validate" name="username" onblur="isExisted()">
+								<input id="username" type="text" class="validate white-text" name="username" onblur="isExisted()">
 								<label id="usernameLab" for="username">用户名</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="password" type="password" class="validate" name="pwd">
+								<input id="password" type="password" class="validate white-text" name="pwd">
 								<label for="password">密码</label>
 							</div>
 						</div>
@@ -88,8 +87,11 @@
 		</div>
 	</div>
 </main>
-<!--<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>-->
+<script src="js/lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
+</body>
 <script>
+	$("#menu").sideNav();
+
 	function isExisted() {
 		let usernameObj = document.getElementById('username');
 		let usernameLab = document.getElementById('usernameLab');
@@ -119,5 +121,4 @@
 		});
 	}
 </script>
-</body>
 </html>
